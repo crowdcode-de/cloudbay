@@ -1,4 +1,4 @@
-package io.crowdcode.speedbay.time.config;
+package io.crowdcode.cloudbay.time.config;
 
 import io.jaegertracing.Configuration;
 import io.opentracing.Tracer;

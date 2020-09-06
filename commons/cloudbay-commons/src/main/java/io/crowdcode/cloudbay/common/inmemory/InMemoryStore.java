@@ -20,9 +20,9 @@ public class InMemoryStore<T extends Identifiable<Long>> {
 
     private static final Logger log = LoggerFactory.getLogger(InMemoryStore.class);
 
-    private Map<Long, T> store;
+    private final Map<Long, T> store;
 
-    private Long sequence = 0l;
+    private Long sequence = 0L;
 
     public InMemoryStore() {
         store = new HashMap<>();

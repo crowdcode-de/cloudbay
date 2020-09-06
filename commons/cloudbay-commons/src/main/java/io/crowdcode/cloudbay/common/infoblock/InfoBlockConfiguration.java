@@ -18,7 +18,7 @@ import java.net.InetAddress;
 public class InfoBlockConfiguration {
 
     @Bean
-    @ConditionalOnProperty(prefix = "io.crowdcode.speedbay.common", name = "enable-info-block", havingValue = "true", matchIfMissing = true)
+    @ConditionalOnProperty(prefix = "io.crowdcode.cloudbay.common", name = "enable-info-block", havingValue = "true", matchIfMissing = true)
     public CommandLineRunner infoBlock(final ApplicationContext context) {
         return (args) -> {
             Environment env = context.getEnvironment();
@@ -35,7 +35,7 @@ public class InfoBlockConfiguration {
             }
 
             String contextPath = env.getProperty("server.servlet.context-path");
-            if (contextPath == null || serverPort.isEmpty()) {
+            if (contextPath == null || contextPath.isEmpty()) {
                 contextPath = "/";
             }
 

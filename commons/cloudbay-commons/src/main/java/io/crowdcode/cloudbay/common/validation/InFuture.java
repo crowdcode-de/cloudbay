@@ -23,7 +23,7 @@ public @interface InFuture {
 
     ChronoUnit chronoUnit() default ChronoUnit.HOURS;
 
-    String message() default "{de.crowdcode.speedbay.commons.validator.InFuture.message}";
+    String message() default "{de.crowdcode.cloudbay.commons.validator.InFuture.message}";
 
     Class<?>[] groups() default {};
 

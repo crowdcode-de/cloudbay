@@ -1,4 +1,4 @@
-package io.crowdcode.speedbay.time;
+package io.crowdcode.cloudbay.time;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

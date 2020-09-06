@@ -2,9 +2,8 @@ package io.crowdcode.cloudbay.catalog.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -15,21 +14,28 @@ import static io.crowdcode.cloudbay.common.AnsiColor.blue;
 @Service
 public class TimeService {
 
-    private final RestTemplate restTemplate;
+//    private final RestTemplate restTemplate;
+
+    private final WebClient webClient;
 
     @Value("${time.service.url}")
     private String timeServiceUrl;
 
-    public TimeService(RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
+    public TimeService(WebClient webClient) {
+        this.webClient = webClient;
     }
 
     //    @HystrixCommand(fallbackMethod = "defaultNow")
     public LocalDateTime retrieveNow() {
         try {
-            ResponseEntity<TimeResponse> responseEntity = restTemplate
-                    .getForEntity(timeServiceUrl, TimeResponse.class);
-            return responseEntity.getBody().getNow();
+            return webClient.get()
+                    .uri(uriBuilder -> uriBuilder
+                            .path(timeServiceUrl)
+                            .build()
+                    )
+                    .retrieve()
+                    .bodyToMono(TimeResponse.class)
+                    .block().getNow();
         } catch (Exception e) {
             return defaultNow();
         }

@@ -2,6 +2,7 @@ package io.crowdcode.cloudbay.catalog.web;
 
 import io.crowdcode.cloudbay.catalog.domain.Product;
 import io.crowdcode.cloudbay.catalog.repository.ProductRepository;
+import io.crowdcode.cloudbay.catalog.service.TimeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -30,6 +31,8 @@ import java.util.List;
 @RequestMapping("/api/products")
 public class ProductController {
 
+    private final TimeService timeService;
+
     private final ProductRepository productRepository;
 
     @GetMapping
@@ -42,6 +45,8 @@ public class ProductController {
     public ResponseEntity<Void> createProduct(
             @RequestBody Product product, UriComponentsBuilder
             uriComponentsBuilder) {
+
+        product.setCreatedAt(timeService.retrieveNow());
 
         productRepository.save(product);
 

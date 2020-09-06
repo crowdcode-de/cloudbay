@@ -19,7 +19,7 @@ public class BeanListConfiguration {
 
     @Bean
     @ConditionalOnProperty(
-            prefix = "io.crowdcode.speedbay.common",
+            prefix = "io.crowdcode.cloudbay.common",
             name = "print-bean-list",
             havingValue = "true",
             matchIfMissing = true)

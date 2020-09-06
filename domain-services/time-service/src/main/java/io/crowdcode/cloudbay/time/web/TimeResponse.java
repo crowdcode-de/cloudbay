@@ -1,4 +1,4 @@
-package io.crowdcode.speedbay.time.web;
+package io.crowdcode.cloudbay.time.web;
 
 import java.time.LocalDateTime;
 

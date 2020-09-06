@@ -1,4 +1,4 @@
-package io.crowdcode.speedbay.time.web;
+package io.crowdcode.cloudbay.time.web;
 
 import io.crowdcode.cloudbay.common.AnsiColor;
 import lombok.extern.slf4j.Slf4j;

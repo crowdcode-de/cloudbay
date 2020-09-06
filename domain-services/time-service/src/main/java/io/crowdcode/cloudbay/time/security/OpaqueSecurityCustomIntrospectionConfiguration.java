@@ -1,9 +1,7 @@
-package io.crowdcode.speedbay.time.security;
+package io.crowdcode.cloudbay.time.security;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -39,7 +37,7 @@ public class OpaqueSecurityCustomIntrospectionConfiguration extends WebSecurityC
                 .oauth2ResourceServer()
                 .opaqueToken()
                 .introspector((token -> {
-                    log.info("Got OpaqueToken: {}",token);
+                    log.info("Got OpaqueToken: {}", token);
                     return introspector.introspect(token);
                 }))
         ;

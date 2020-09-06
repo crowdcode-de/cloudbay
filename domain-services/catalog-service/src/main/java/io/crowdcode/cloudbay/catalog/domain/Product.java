@@ -15,6 +15,7 @@ import javax.persistence.Lob;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -44,6 +45,8 @@ public class Product {
 
     @Lob
     private String description;
+
+    private LocalDateTime createdAt;
 
     private BigDecimal retailPrice;
     private BigDecimal amount;

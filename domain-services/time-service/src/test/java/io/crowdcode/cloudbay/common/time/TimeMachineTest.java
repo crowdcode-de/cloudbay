@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class TimeMachineTest {
 
     @Test
-    void testMinusFixed() throws Exception {
+    void testMinusFixed() {
         TimeMachine.setFixed();
         LocalDateTime now = TimeMachine.now();
         TimeMachine.clockMinus(2, ChronoUnit.MINUTES);
