@@ -13,10 +13,10 @@ frame security {
     node keycloak
 }
 
-
 frame domainseervices {
-    node timeservice
     node catalogservice
+    node timeservice
+    catalogservice ..> timeservice
 }
 
 database postgres
@@ -34,6 +34,5 @@ timeservice ..> keycloak
 catalogservice ..> keycloak
 catalogservice ..> postgres
 
-timeservice <.. catalogservice
 
 @enduml
