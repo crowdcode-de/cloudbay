@@ -1,3 +1,5 @@
+
+
 ### List All Products
 GET http://localhost:9020/catalog-service/api/products
 Accept: application/json
@@ -17,3 +19,17 @@ Content-Type: application/json
   "title": "Liba Cola",
   "unit": "Liter"
 }
+
+### Get Authentication Token
+POST {{auth-url}}/auth/realms/{{realm}}/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+Accept: application/json
+
+grant_type=client_credentials&client_id={{catalog-client-id}}&client_secret={{catalog-client-secret}}
+
+> {%
+  client.global.set("access_token", response.body.access_token);
+  client.global.set("refresh_token", response.body.refresh_token);
+  client.log(client.global.get("access_token"));
+  client.log(client.global.get("refresh_token"));
+%}

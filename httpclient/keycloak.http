@@ -12,6 +12,9 @@ GET {{auth-url}}/auth/realms/{{realm}}/.well-known/openid-configuration
   client.global.set("check_session_iframe", response.body.check_session_iframe);
 %}
 
+### JWKS
+GET {{keycloak-url}}/auth/realms/cloudbay/protocol/openid-connect/certs
+
 ### SAML 2.0 Identity Provider Metadata
 GET {{auth-url}}/auth/realms/{{realm}}/protocol/saml/descriptor
 Accept: application/xml
