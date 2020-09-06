@@ -19,7 +19,7 @@
 
     <developers>
         <developer>
-            <name>Ingo Dueppe</name>
+            <name>Ingo Düppe</name>
             <email>ingo.dueppe@crowdcode.io</email>
             <organization>CROWDCODE GmbH + Co. KG</organization>
             <organizationUrl>https://www.crowdcode.io</organizationUrl>
@@ -31,6 +31,7 @@
         <module>commons/service-parent</module>
         <module>domain-services/time-service</module>
         <module>domain-services/catalog-service</module>
+        <module>domain-services/greeting-service</module>
         <module>cluster-services/gateway-service</module>
     </modules>
 
