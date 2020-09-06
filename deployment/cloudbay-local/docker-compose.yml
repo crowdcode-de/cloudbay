@@ -19,14 +19,14 @@ services:
     environment:
       KEYCLOAK_USER: admin
       KEYCLOAK_PASSWORD: 4d1m!
-      KEYCLOAK_IMPORT: /tmp/realm-speedbay.json
+      KEYCLOAK_IMPORT: /tmp/realm-cloudbay.json
       DB_VENDOR: postgres
       DB_ADDR: postgres
       DB_DATABASE: postgres
       DB_USER: postgres
       DB_PASSWORD: masterkey
     volumes:
-    - ./keycloak/realm-speedbay.json:/tmp/realm-speedbay.json
+    - ../keycloak/realm-cloudbay.json:/tmp/realm-cloudbay.json
     stdin_open: true
     tty: true
     ports:
