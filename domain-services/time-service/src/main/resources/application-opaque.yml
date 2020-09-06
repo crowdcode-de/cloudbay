@@ -3,6 +3,6 @@ spring:
     oauth2:
       resourceserver:
         opaquetoken:
-          introspection-uri: http://localhost:8200/auth/realms/speedbay/protocol/openid-connect/token/introspect
+          introspection-uri: http://localhost:8200/auth/realms/cloudbay/protocol/openid-connect/token/introspect
           client-id: introspection-client
-          client-secret: e51d2e3b-0810-4963-8d4a-777449855448
+          client-secret: 9a149149-1355-4531-85ba-32477d48c9de
