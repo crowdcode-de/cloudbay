@@ -37,6 +37,13 @@ The time-service runs on [http://localhost:8500/now](http://localhost:8500/now)
 
 For this validation to work using the issuer-uri property, the authorization server must be up and running. Otherwise, the resource server wouldn't start.
 
+### Catalog-Service (Resource-Service)
+
+The catalog-service runs on [http://localhost:9020/catalog-service](http://localhost:9020/catalog-service)
+
+### Greeting-Service (Resource-Service)
+
+The greeting-service runs on [http://localhost:8300/greeting-service](http://localhost:8300/greeting-service)
 
 ## Commons
 
