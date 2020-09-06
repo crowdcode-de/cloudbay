@@ -1,8 +1,8 @@
 {
-  "id": "speedbay",
-  "realm": "speedbay",
-  "displayName": "SpeedBay",
-  "displayNameHtml": "<h1>CROWDCODE<h1><h2>SpeedBay Security Demo</h2>",
+  "id": "cloudbay",
+  "realm": "cloudbay",
+  "displayName": "CloudBay",
+  "displayNameHtml": "<h1>CROWDCODE<h1><h2>Cloudbay Security Demo</h2>",
   "notBefore": 0,
   "revokeRefreshToken": false,
   "refreshTokenMaxReuse": 0,
@@ -50,7 +50,7 @@
         "description": "${role_uma_authorization}",
         "composite": false,
         "clientRole": false,
-        "containerId": "speedbay",
+        "containerId": "cloudbay",
         "attributes": {}
       },
       {
@@ -58,7 +58,7 @@
         "name": "customer",
         "composite": false,
         "clientRole": false,
-        "containerId": "speedbay",
+        "containerId": "cloudbay",
         "attributes": {}
       },
       {
@@ -66,7 +66,7 @@
         "name": "admin",
         "composite": false,
         "clientRole": false,
-        "containerId": "speedbay",
+        "containerId": "cloudbay",
         "attributes": {}
       },
       {
@@ -75,7 +75,7 @@
         "description": "${role_offline-access}",
         "composite": false,
         "clientRole": false,
-        "containerId": "speedbay",
+        "containerId": "cloudbay",
         "attributes": {}
       },
       {
@@ -83,7 +83,7 @@
         "name": "employee",
         "composite": false,
         "clientRole": false,
-        "containerId": "speedbay",
+        "containerId": "cloudbay",
         "attributes": {}
       }
     ],
@@ -499,18 +499,18 @@
       "clientId": "account",
       "name": "${client_account}",
       "rootUrl": "${authBaseUrl}",
-      "baseUrl": "/realms/speedbay/account/",
+      "baseUrl": "/realms/cloudbay/account/",
       "surrogateAuthRequired": false,
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
-      "secret": "**********",
+      "secret": "fa7ce07b-6e0a-404d-adaf-e08a0f12781e",
       "defaultRoles": [
         "manage-account",
         "view-profile"
       ],
       "redirectUris": [
-        "/realms/speedbay/account/*"
+        "/realms/cloudbay/account/*"
       ],
       "webOrigins": [],
       "notBefore": 0,
@@ -546,14 +546,14 @@
       "clientId": "account-console",
       "name": "${client_account-console}",
       "rootUrl": "${authBaseUrl}",
-      "baseUrl": "/realms/speedbay/account/",
+      "baseUrl": "/realms/cloudbay/account/",
       "surrogateAuthRequired": false,
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
       "secret": "**********",
       "redirectUris": [
-        "/realms/speedbay/account/*"
+        "/realms/cloudbay/account/*"
       ],
       "webOrigins": [],
       "notBefore": 0,
@@ -679,18 +679,18 @@
       "clientId": "gateway-service",
       "name": "gateway-service",
       "description": "Secure Gateway Service",
-      "rootUrl": "https://localhost:8080",
-      "adminUrl": "https://localhost:8080",
+      "rootUrl": "http://localhost:8080",
+      "adminUrl": "http://localhost:8080",
       "surrogateAuthRequired": false,
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
       "secret": "6c3f5c12-00ad-4032-928e-07351e6a47ec",
       "redirectUris": [
-        "https://localhost:8080/*"
+        "http://localhost:8080/*"
       ],
       "webOrigins": [
-        "https://localhost:8080"
+        "http://localhost:8080"
       ],
       "notBefore": 0,
       "bearerOnly": false,
@@ -748,7 +748,7 @@
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
-      "secret": "**********",
+      "secret": "9a149149-1355-4531-85ba-32477d48c9de",
       "redirectUris": [
         "http://localhost/*"
       ],
@@ -852,7 +852,7 @@
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
-      "secret": "**********",
+      "secret": "112278af-a456-47fc-87df-becc6e6e1fb0",
       "redirectUris": [
         "http://localhost/*"
       ],
@@ -945,14 +945,14 @@
       "clientId": "security-admin-console",
       "name": "${client_security-admin-console}",
       "rootUrl": "${authAdminUrl}",
-      "baseUrl": "/admin/speedbay/console/",
+      "baseUrl": "/admin/cloudbay/console/",
       "surrogateAuthRequired": false,
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
       "secret": "**********",
       "redirectUris": [
-        "/admin/speedbay/console/*"
+        "/admin/cloudbay/console/*"
       ],
       "webOrigins": [
         "+"
@@ -2300,7 +2300,7 @@
     "clientOfflineSessionMaxLifespan": "0",
     "clientSessionIdleTimeout": "0",
     "clientSessionMaxLifespan": "0",
-    "frontendUrl": "https://crowdcode.io",
+    "frontendUrl": "http://localhost:8200/auth/",
     "clientOfflineSessionIdleTimeout": "0"
   },
   "keycloakVersion": "11.0.2",
