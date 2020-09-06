@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GATEWAY CROWDCODE</title>
+    <link href="favicon.png" rel="icon" type="image/png">
+</head>
+<body>
+<h1>GATEWAY</h1><br>
+<p>
+    Version: <span id="version"></span><br/>
+    User: <span id="username"></span><br>
+</p>
+
+<span id="error" style="color:red"></span>
+<p>
+    <a href="logout">Logout (local)</a><br/>
+    <a href="https://identity.crowdcode.io/keycloak/auth/realms/speedbay/protocol/openid-connect/logout">Logout KeyCloak</a>
+</p>
+</body>
+<script lang="js">
+    function setText(id, text) {
+        document.getElementById(id).innerText = text;
+    }
+
+    fetch("api/version")
+        .then((response) => response.json()
+            .then(body => setText("version", body.version))
+            .catch(error => setText("error", error)))
+        .catch(error => setText("error", error));
+
+    fetch("api/userinfo")
+        .then(async (response) => {
+            let data = await response.json();
+            console.log(data);
+            setText("username", data['username']);
+        })
+        .catch(error => setText("error", error))
+
+</script>
+</html>
