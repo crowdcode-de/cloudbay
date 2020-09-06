@@ -14,8 +14,6 @@ import static io.crowdcode.cloudbay.common.AnsiColor.blue;
 @Service
 public class TimeService {
 
-//    private final RestTemplate restTemplate;
-
     private final WebClient webClient;
 
     @Value("${time.service.url}")
@@ -25,18 +23,16 @@ public class TimeService {
         this.webClient = webClient;
     }
 
-    //    @HystrixCommand(fallbackMethod = "defaultNow")
     public LocalDateTime retrieveNow() {
         try {
             return webClient.get()
-                    .uri(uriBuilder -> uriBuilder
-                            .path(timeServiceUrl)
-                            .build()
-                    )
+                    .uri(timeServiceUrl)
                     .retrieve()
                     .bodyToMono(TimeResponse.class)
-                    .block().getNow();
-        } catch (Exception e) {
+                    .block()
+                    .getNow();
+        } catch (Exception ex) {
+            log.error("Error while getting", ex);
             return defaultNow();
         }
     }
