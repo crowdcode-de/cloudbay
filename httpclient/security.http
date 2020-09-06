@@ -1,0 +1,6 @@
+### Get KeyCloak OpenID Configuration
+GET {{keycloak-url}}/auth/realms/cloudbay/.well-known/openid-configuration
+
+### JWKS
+GET {{keycloak-url}}/auth/realms/cloudbay/protocol/openid-connect/certs
+
