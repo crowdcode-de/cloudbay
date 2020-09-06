@@ -1,0 +1,19 @@
+### List All Products
+GET http://localhost:9020/catalog-service/api/products
+Accept: application/json
+
+### Add a Product
+POST http://localhost:9020/catalog-service/api/products
+Content-Type: application/json
+
+{
+  "amount": 0.75,
+  "description": "string",
+  "retailPrice": 1.5,
+  "sku": "TESTSKU",
+  "tags": [
+    "Limo", "Cola", "Münster"
+  ],
+  "title": "Liba Cola",
+  "unit": "Liter"
+}
