@@ -323,6 +323,7 @@
         }
       ],
       "security-admin-console": [],
+      "catalog-service": [],
       "admin-cli": [],
       "account-console": [],
       "broker": [
@@ -451,6 +452,29 @@
   "webAuthnPolicyPasswordlessAvoidSameAuthenticatorRegister": false,
   "webAuthnPolicyPasswordlessAcceptableAaguids": [],
   "users": [
+    {
+      "id": "da2be052-ca86-4887-a21a-d162236e1265",
+      "createdTimestamp": 1599418497196,
+      "username": "service-account-catalog-service",
+      "enabled": true,
+      "totp": false,
+      "emailVerified": false,
+      "serviceAccountClientId": "catalog-service",
+      "disableableCredentialTypes": [],
+      "requiredActions": [],
+      "realmRoles": [
+        "uma_authorization",
+        "offline_access"
+      ],
+      "clientRoles": {
+        "account": [
+          "manage-account",
+          "view-profile"
+        ]
+      },
+      "notBefore": 0,
+      "groups": []
+    },
     {
       "id": "1a35ebe6-2d82-4b04-b6a6-b3907d3185ea",
       "createdTimestamp": 1599412612864,
@@ -698,6 +722,110 @@
       ]
     },
     {
+      "id": "0c60f02e-323c-4cec-902c-7730b7c1c7b2",
+      "clientId": "catalog-service",
+      "name": "catalog-service",
+      "rootUrl": "http://localhost:9020/catalog-service",
+      "adminUrl": "",
+      "baseUrl": "http://localhost:9020/catalog-service",
+      "surrogateAuthRequired": false,
+      "enabled": true,
+      "alwaysDisplayInConsole": false,
+      "clientAuthenticatorType": "client-secret",
+      "secret": "e685081e-a497-4bd0-a7de-83c96d60d27c",
+      "redirectUris": [
+        "http://localhost:9020/catalog-service"
+      ],
+      "webOrigins": [
+        "http://localhost:9020/catalog-service"
+      ],
+      "notBefore": 0,
+      "bearerOnly": false,
+      "consentRequired": false,
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": true,
+      "serviceAccountsEnabled": true,
+      "publicClient": false,
+      "frontchannelLogout": false,
+      "protocol": "openid-connect",
+      "attributes": {
+        "saml.assertion.signature": "false",
+        "saml.multivalued.roles": "false",
+        "saml.force.post.binding": "false",
+        "saml.encrypt": "false",
+        "saml.server.signature": "false",
+        "saml.server.signature.keyinfo.ext": "false",
+        "exclude.session.state.from.auth.response": "false",
+        "saml_force_name_id_format": "false",
+        "saml.client.signature": "false",
+        "tls.client.certificate.bound.access.tokens": "false",
+        "saml.authnstatement": "false",
+        "display.on.consent.screen": "false",
+        "saml.onetimeuse.condition": "false"
+      },
+      "authenticationFlowBindingOverrides": {},
+      "fullScopeAllowed": true,
+      "nodeReRegistrationTimeout": -1,
+      "protocolMappers": [
+        {
+          "id": "31fda460-1fff-48d8-a9cf-76f4b0557c23",
+          "name": "Client Host",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usersessionmodel-note-mapper",
+          "consentRequired": false,
+          "config": {
+            "user.session.note": "clientHost",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "claim.name": "clientHost",
+            "jsonType.label": "String"
+          }
+        },
+        {
+          "id": "100753b5-263c-4a67-a9bf-32f50d0f717d",
+          "name": "Client IP Address",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usersessionmodel-note-mapper",
+          "consentRequired": false,
+          "config": {
+            "user.session.note": "clientAddress",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "claim.name": "clientAddress",
+            "jsonType.label": "String"
+          }
+        },
+        {
+          "id": "83b62049-8e19-4d7d-b8a5-ab573034af0d",
+          "name": "Client ID",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usersessionmodel-note-mapper",
+          "consentRequired": false,
+          "config": {
+            "user.session.note": "clientId",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "claim.name": "clientId",
+            "jsonType.label": "String"
+          }
+        }
+      ],
+      "defaultClientScopes": [
+        "web-origins",
+        "role_list",
+        "profile",
+        "roles",
+        "email"
+      ],
+      "optionalClientScopes": [
+        "address",
+        "phone",
+        "offline_access",
+        "microprofile-jwt"
+      ]
+    },
+    {
       "id": "f78d4712-17a9-4173-b2ab-ad5024da8110",
       "clientId": "gateway-service",
       "name": "gateway-service",
@@ -710,13 +838,13 @@
       "clientAuthenticatorType": "client-secret",
       "secret": "6c3f5c12-00ad-4032-928e-07351e6a47ec",
       "redirectUris": [
-        "http://catalog-service",
-        "http://localhost:9020/*"
+        "http://gateway-service",
+        "http://localhost:8080/*"
       ],
       "webOrigins": [
-        "http://localhost:9020",
-        "http://catalog-service",
-        "http://catalog-service:9020"
+        "http://localhost:8080",
+        "http://gateway-service:8080",
+        "http://gateway-service"
       ],
       "notBefore": 0,
       "bearerOnly": false,
