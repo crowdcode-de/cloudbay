@@ -1,0 +1,37 @@
+version: "3"
+services:
+  mailtrap:
+    build: ../mailtrap
+    ports:
+    - 80:80
+    - 25:25
+    - 110:110
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: masterkey
+    stdin_open: true
+    tty: true
+    ports:
+    - 5432:5432
+  keycloak:
+    image: jboss/keycloak
+    environment:
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: 4d1m!
+      KEYCLOAK_IMPORT: /tmp/realm-speedbay.json
+      DB_VENDOR: postgres
+      DB_ADDR: postgres
+      DB_DATABASE: postgres
+      DB_USER: postgres
+      DB_PASSWORD: masterkey
+    volumes:
+    - ./keycloak/realm-speedbay.json:/tmp/realm-speedbay.json
+    stdin_open: true
+    tty: true
+    ports:
+    - 8200:8080
+    - 9090:9090
+    links:
+      - postgres:postgres
+
