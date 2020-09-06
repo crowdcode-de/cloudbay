@@ -1,4 +1,4 @@
-package io.crowdcode.spring.catalog.config;
+package io.crowdcode.cloudbay.catalog.config;
 
 import io.jaegertracing.Configuration;
 import io.opentracing.Tracer;

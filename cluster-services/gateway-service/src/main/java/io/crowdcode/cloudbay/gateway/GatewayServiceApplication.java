@@ -1,4 +1,4 @@
-package io.crowdcode.spring.gateway;
+package io.crowdcode.cloudbay.gateway;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

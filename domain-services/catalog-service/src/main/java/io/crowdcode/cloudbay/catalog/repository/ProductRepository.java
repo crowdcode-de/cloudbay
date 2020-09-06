@@ -1,6 +1,6 @@
-package io.crowdcode.spring.catalog.repository;
+package io.crowdcode.cloudbay.catalog.repository;
 
-import io.crowdcode.spring.catalog.domain.Product;
+import io.crowdcode.cloudbay.catalog.domain.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

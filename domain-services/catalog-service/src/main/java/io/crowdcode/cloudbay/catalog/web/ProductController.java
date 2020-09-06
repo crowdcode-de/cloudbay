@@ -1,7 +1,7 @@
-package io.crowdcode.spring.catalog.web;
+package io.crowdcode.cloudbay.catalog.web;
 
-import io.crowdcode.spring.catalog.domain.Product;
-import io.crowdcode.spring.catalog.repository.ProductRepository;
+import io.crowdcode.cloudbay.catalog.domain.Product;
+import io.crowdcode.cloudbay.catalog.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

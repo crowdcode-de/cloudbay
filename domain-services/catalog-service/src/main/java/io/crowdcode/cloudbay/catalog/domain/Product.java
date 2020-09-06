@@ -1,4 +1,4 @@
-package io.crowdcode.spring.catalog.domain;
+package io.crowdcode.cloudbay.catalog.domain;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

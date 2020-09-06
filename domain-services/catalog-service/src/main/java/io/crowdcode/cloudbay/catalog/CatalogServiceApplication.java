@@ -1,7 +1,7 @@
-package io.crowdcode.spring.catalog;
+package io.crowdcode.cloudbay.catalog;
 
-import io.crowdcode.spring.catalog.domain.Product;
-import io.crowdcode.spring.catalog.repository.ProductRepository;
+import io.crowdcode.cloudbay.catalog.domain.Product;
+import io.crowdcode.cloudbay.catalog.repository.ProductRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
