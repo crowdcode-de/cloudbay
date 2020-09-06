@@ -1,0 +1,40 @@
+### Well-Known URL OpenID Connect
+GET {{auth-url}}/auth/realms/{{realm}}/.well-known/openid-configuration
+
+> {%
+  client.global.set("issuer", response.body.issuer);
+  client.global.set("authorization_endpoint", response.body.authorization_endpoint);
+  client.global.set("token_endpoint", response.body.token_endpoint);
+  client.global.set("introspection_endpoint", response.body.introspection_endpoint);
+  client.global.set("userinfo_endpoint", response.body.userinfo_endpoint);
+  client.global.set("end_session_endpoint", response.body.end_session_endpoint);
+  client.global.set("jwks_uri", response.body.jwks_uri);
+  client.global.set("check_session_iframe", response.body.check_session_iframe);
+%}
+
+### SAML 2.0 Identity Provider Metadata
+GET {{auth-url}}/auth/realms/{{realm}}/protocol/saml/descriptor
+Accept: application/xml
+
+### Realm Issuer Uri
+GET {{auth-url}}/auth/realms/{{realm}}
+Accept: application/json
+
+### Token Introspection
+POST {{auth-url}}/auth/realms/{{realm}}/protocol/openid-connect/token/introspect
+Authorization: Basic {{intro-client-id}} {{intro-client-secret}}
+Content-Type: application/x-www-form-urlencoded
+Accept: application/json
+
+token={{access_token}}
+
+### User Info Token Inspection
+POST {{auth-url}}/auth/realms/{{realm}}/protocol/openid-connect/userinfo
+Authorization: Bearer {{access_token}}
+
+
+### Refresh Token Grant Flow
+POST {{token_endpoint}}
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=refresh_token&refresh_token={{refresh_token}}&client_id={{intro-client-id}}&client_secret={{intro-client-secret}}
