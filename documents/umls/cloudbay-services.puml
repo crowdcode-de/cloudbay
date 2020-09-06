@@ -1,0 +1,39 @@
+@startuml
+
+!include styling.iuml
+
+actor user
+
+frame "cloud services" {
+    node gateway
+    node jaeger
+}
+
+frame security {
+    node keycloak
+}
+
+
+frame domainseervices {
+    node timeservice
+    node catalogservice
+}
+
+database postgres
+
+user --> gateway
+
+gateway ..> keycloak
+gateway ..> timeservice
+gateway ..> catalogservice
+gateway ..> catalogservice
+
+
+keycloak ..> postgres
+timeservice ..> keycloak
+catalogservice ..> keycloak
+catalogservice ..> postgres
+
+timeservice <.. catalogservice
+
+@enduml
