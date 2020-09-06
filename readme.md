@@ -25,6 +25,10 @@ Service will be started under `http://localhost:80` and the default username and
 Using docker hub image `postgres:latest`.
 Postgres Database is running at default port `5432`.
 
+### **Jaeger** as a distributed tracing sevice
+
+Jaeger Frontend is available under [http://localhost:16686](http://localhost:16686)
+
 ## Domain Services
 
 ### Time-Service (Resource-Service)
