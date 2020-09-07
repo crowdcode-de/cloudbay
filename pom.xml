@@ -32,6 +32,7 @@
         <module>domain-services/time-service</module>
         <module>domain-services/catalog-service</module>
         <module>domain-services/greeting-service</module>
+        <module>domain-services/auction-service</module>
         <module>cluster-services/gateway-service</module>
     </modules>
 
