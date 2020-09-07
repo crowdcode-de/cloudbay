@@ -1,4 +1,4 @@
-package io.crowdcode.jopt.greetingservice;
+package io.crowdcode.cloudbay.greetingservice;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

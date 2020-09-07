@@ -1,4 +1,4 @@
-package io.crowdcode.jopt.greetingservice;
+package io.crowdcode.cloudbay.greetingservice;
 
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
