@@ -24,6 +24,7 @@ public class OAuth2LoginSecurityConfiguration extends WebSecurityConfigurerAdapt
                 .and()
                 .csrf().disable()
                 .authorizeRequests()
+                .antMatchers("/","/index.html","/favicon.png").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .oauth2Login()
