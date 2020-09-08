@@ -1,0 +1,27 @@
+@startuml
+
+!include ../styling.iuml
+
+
+"User Agent" -> "Client Application": 1. Request a Resource
+
+"Client Application" -> "Authorization Server": 2. Auth Code Request
+
+"User Agent" <- "Authorization Server": 3. Login Page
+"User Agent" -> "Authorization Server": 4. User Login
+
+"Client Application" <- "Authorization Server": 5. Auth Code
+
+"Client Application" -> "Authorization Server": 6. Exchange Code for Token
+
+"Client Application" <- "Authorization Server": 7. Access Token
+
+"Client Application" -> "Resource Server": 8. API call with Access Token
+
+"Authorization Server" <- "Resource Server": 9. Validate Token
+
+"Client Application" <- "Resource Server": 10. API Response if token valid"
+
+
+
+@enduml

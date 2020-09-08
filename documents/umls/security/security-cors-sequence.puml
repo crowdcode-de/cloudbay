@@ -1,0 +1,27 @@
+@startuml
+
+!include ../styling.iuml
+
+-> CorsFilter : doFilterInternal(request, response, filterChain)
+activate CorsFilter
+CorsFilter -> CorsConfigurationSource: getCorsConfiguration(request)
+activate CorsConfigurationSource
+CorsFilter <-- CorsConfigurationSource
+deactivate CorsConfigurationSource
+CorsFilter -> CorsProcessor: processRequest(corsConfig, request, response)
+activate CorsProcessor
+CorsFilter <-- CorsProcessor
+deactivate CorsProcessor
+CorsFilter -> CorsUtils : isPreflightRequest(request)
+activate CorsUtils
+CorsFilter <-- CorsUtils
+deactivate CorsUtils
+CorsFilter -> filterChain: doFilter(request, response)
+activate filterChain
+CorsFilter <-- filterChain
+deactivate filterChain
+<- CorsFilter
+deactivate CorsFilter
+
+
+@enduml

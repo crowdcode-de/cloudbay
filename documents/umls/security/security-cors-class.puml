@@ -1,0 +1,18 @@
+@startuml
+
+!include ../styling.iuml
+
+interface CorsFilter
+
+interface CorsConfigurationSource
+
+interface CorsProcessor
+
+class CorsFilter
+class CorsUtils
+
+CorsFilter -> CorsProcessor
+CorsFilter -> CorsConfigurationSource
+
+
+@enduml

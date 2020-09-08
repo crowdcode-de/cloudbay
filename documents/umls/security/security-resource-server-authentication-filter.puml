@@ -1,0 +1,20 @@
+@startuml
+
+!include ../styling.iuml
+
+class BearerTokenAuthenticationFilter
+
+BearerTokenAuthenticationFilter --> "bearerTokenResolver" DefaultBearerTokenResolver
+BearerTokenAuthenticationFilter ---> "authenticationEntryPoint" BearerTokenAuthenticationEntryPoint
+
+
+BearerTokenAuthenticationFilter ----> "authenticationManagerResolver" OAuth2ResourceServerConfigurer
+
+OAuth2ResourceServerConfigurer --> "providers" AnonymousAuthenticationProvider
+OAuth2ResourceServerConfigurer --> "providers" JwtAuthenticationProvider
+
+JwtAuthenticationProvider --> "jwtDecoder" NimbusJwtDecoder
+JwtAuthenticationProvider --> "jwtAuthenticationConverter" JwtAuthenticationConverter
+
+
+@enduml

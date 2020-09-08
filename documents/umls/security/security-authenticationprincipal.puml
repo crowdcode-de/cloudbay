@@ -1,0 +1,17 @@
+@startuml
+
+!include ../styling.iuml
+
+interface AuthenticatedPrincipal {
+    getName():String
+}
+
+interface OAuth2AuthenticatedPrincipal extends AuthenticatedPrincipal
+interface OAuth2User extends OAuth2AuthenticatedPrincipal
+interface OidcUser extends OAuth2User
+
+class DefaultOidcUser extends DefaultOAuth2User implements OidcUser
+class DefaultOAuth2User implements OAuth2User
+class DefaultOAuth2AuthenticatedPrincipal <<final>> implements OAuth2AuthenticatedPrincipal
+
+@enduml

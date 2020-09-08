@@ -1,0 +1,29 @@
+@startuml
+
+!include ../styling.iuml
+
+interface AuthenticationProvider {
+    authenticate(authentication:Authentication):Authentication
+    supports(authentication:Class):boolean
+}
+
+class OAuth2LoginAuthenticationProvider implements AuthenticationProvider
+class OidcAuthorizationCodeAuthenticationProvider implements AuthenticationProvider
+class OAuth2AuthorizationCodeAuthenticationProvider implements AuthenticationProvider
+
+interface OAuth2AccessTokenResponseClient<T extends AbstractOAuth2AuthorizationGrantRequest> {
+    getTokenResponse( authorizationGrandRequest:T):OAuth2AccessTokenResponse
+}
+
+OAuth2AuthorizationCodeAuthenticationProvider --> OAuth2AccessTokenResponseClient
+
+
+class OAuth2AccessTokenResponse <<final>> {
+    accessToken: OAuth2AccessToken
+    refreshToken: OAuth2RefreshToken
+    additionalParameters: Map<String, Object>
+}
+
+class DefaultAuthorizationCodeTokenResponseClient implements OAuth2AccessTokenResponseClient
+
+@enduml

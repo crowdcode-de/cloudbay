@@ -1,0 +1,46 @@
+@startuml
+
+!include ../styling.iuml
+
+interface Principal {
+    getName():String
+}
+interface Authentication {
+    getAuthorities():GrantedAuthority[]
+    getCredentials(): Object
+    getDetails(): Object
+    getPrincipal(): Object
+    isAuthenticated():boolean
+    setAuthenticated(isAuthenticated:boolean)
+}
+
+abstract class AbstractAuthenticationToken
+
+'class RememberMeAuthenticationToken extends AbstractAuthenticationToken
+
+'together {
+'    class UsernamePasswordAuthenticationToken extends AbstractAuthenticationToken
+'    class AnonymousAuthenticationToken extends AbstractAuthenticationToken
+'    class RunAsUserToken extends AbstractAuthenticationToken
+'}
+'
+'together {
+'    class OAuth2AuthenticationToken extends AbstractAuthenticationToken
+'    class OAuth2AuthorizationCodeAuthenticationToken extends AbstractAuthenticationToken
+'    class OAuth2LoginAuthenticationToken extends AbstractAuthenticationToken
+'}
+
+Principal <|- Authentication
+Authentication <|.. AbstractAuthenticationToken
+
+AbstractAuthenticationToken <|-- RememberMeAuthenticationToken
+AbstractAuthenticationToken <|---- UsernamePasswordAuthenticationToken
+AbstractAuthenticationToken <|--- AnonymousAuthenticationToken
+AbstractAuthenticationToken <|-- RunAsUserToken
+AbstractAuthenticationToken <|---- OAuth2AuthenticationToken
+AbstractAuthenticationToken <|--- OAuth2AuthorizationCodeAuthenticationToken
+AbstractAuthenticationToken <|-- OAuth2LoginAuthenticationToken
+
+
+
+@enduml

@@ -1,0 +1,17 @@
+@startuml
+
+!include ../styling.iuml
+
+WebAsyncManagerIntegrationFilter .> SecurityContextPersistentFilter
+SecurityContextPersistentFilter .> HeaderWriterFilter
+HeaderWriterFilter .> CsrfFilter
+CsrfFilter ..> LogoutFilter
+BearerTokenAuthenticationFilter <. LogoutFilter
+RequestCacheAwareFilter <. BearerTokenAuthenticationFilter
+SecurityContextHolderAwareRequestFilter <. RequestCacheAwareFilter
+SecurityContextHolderAwareRequestFilter ..> AnonymousAuthenticationFilter
+AnonymousAuthenticationFilter .> SessionManagementFilter
+SessionManagementFilter .> ExceptionTranslationFilter
+ExceptionTranslationFilter .> FilterSecurityInterceptor
+
+@enduml

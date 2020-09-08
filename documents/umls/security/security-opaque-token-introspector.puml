@@ -1,0 +1,25 @@
+@startuml
+
+!include ../styling.iuml
+
+
+interface OpaqueTokenIntrospector {
+    introspect(token:String):OAuth2AuthenticatedPrincipal
+}
+
+interface OAuth2IntrospectionClaimNames {
+    ACTIVE = "active";
+    SCOPE = "scope";
+    CLIENT_ID = "client_id";
+    USERNAME = "username";
+    TOKEN_TYPE = "token_type";
+    EXPIRES_AT = "exp";
+    ISSUED_AT = "iat";
+    NOT_BEFORE = "nbf";
+    SUBJECT = "sub";
+    AUDIENCE = "aud";
+    ISSUER = "iss";
+    JTI = "jti";
+}
+
+@enduml

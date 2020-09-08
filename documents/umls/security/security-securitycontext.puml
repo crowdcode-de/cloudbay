@@ -1,0 +1,27 @@
+@startuml
+
+!include ../styling.iuml
+
+interface SecurityContext {
+    getAuthentication():Authentication
+    setAuthentication(authentication:Authentication)
+}
+
+interface SecurityContextRepository {
+	loadContext(requestResponseHolder:HttpRequestResponseHolder):SecurityContext
+    saveContext(context:SecurityContext, request, response:HttpServletResponse);
+    containsContext(request:HttpServletRequest):boolean;
+}
+
+SecurityContextRepository <|.. HttpSessionSecurityContextRepository
+SecurityContextRepository <|... NullSecurityContextRepository
+
+SecurityContextPersistentFilter ..> SecurityContext
+SecurityContext ..> Authentication
+
+HttpSecurity -> SecurityContextConfigurer
+SecurityContextConfigurer .> SecurityContextPersistentFilter : configure >
+
+SecurityContextPersistentFilter --> "repo" SecurityContextRepository
+
+@enduml

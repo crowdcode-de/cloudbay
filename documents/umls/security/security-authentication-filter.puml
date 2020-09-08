@@ -1,0 +1,23 @@
+@startuml
+
+!include ../styling.iuml
+
+abstract class AbstractAuthenticationProcessingFilter extends GenericFilterBean
+
+
+
+AbstractAuthenticationProcessingFilter o--> AuthenticationManager
+AbstractAuthenticationProcessingFilter o---> AuthenticationDetailsSource
+AbstractAuthenticationProcessingFilter o----> AuthenticationSuccessHandler
+AbstractAuthenticationProcessingFilter o---> AuthenticationFailureHandler
+AbstractAuthenticationProcessingFilter o--> RequestMatcher
+AbstractAuthenticationProcessingFilter o----> ApplicationEventPublished
+AbstractAuthenticationProcessingFilter o---> RememberMeServices
+AbstractAuthenticationProcessingFilter o----> SessionAuthenticationStrategy
+
+
+
+
+
+
+@enduml

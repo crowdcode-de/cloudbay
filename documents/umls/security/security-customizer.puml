@@ -1,0 +1,11 @@
+@startuml
+
+!include ../styling.iuml
+
+interface Customizer<T> {
+
+    customize(t:T)
+    {static} withDefaults():Customizer<T>
+}
+
+@enduml

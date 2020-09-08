@@ -1,0 +1,27 @@
+@startuml
+
+!include ../styling.iuml
+
+actor "User Agent"
+participant "Keycloak"
+participant "FilterProxyChain"
+participant "ExceptionTranslationFilter"
+participant "DelegatingAuthenticationEntryPoint"
+
+participant "FilterSecurityInterceptor"
+
+"User Agent" -> "FilterProxyChain": call /secure.html
+
+"FilterProxyChain" -> "FilterSecurityInterceptor": invoke
+"FilterSecurityInterceptor" -> "FilterSecurityInterceptor": beforeInvoke
+"FilterSecurityInterceptor" -> "AccessDecision": decide (anonymousAuthenticationToken,..)
+"ExceptionTranslationFilter" <- "AccessDecision": throw AccessDeniedException
+"ExceptionTranslationFilter" -> "ExceptionTranslationFilter": handleSpringSecurityException
+"ExceptionTranslationFilter" -> "ExceptionTranslationFilter": sendStartAuthentication
+"ExceptionTranslationFilter" -> "DelegatingAuthenticationEntryPoint": commence
+"User Agent" <- "DelegatingAuthenticationEntryPoint": redirect /oauth2/authorization/keycloak
+
+
+
+
+@enduml

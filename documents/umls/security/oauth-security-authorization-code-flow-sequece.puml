@@ -1,0 +1,51 @@
+@startuml
+
+!include ../styling.iuml
+
+actor "User Agent"
+participant "Keycloak"
+participant "FilterProxyChain"
+participant "OAuth2AuthorizationRequestRedirectFilter"
+participant "ExceptionTranslationFilter"
+participant "DelegatingAuthenticationEntryPoint"
+participant "AbstractAuthenticationProcessingFilter"
+participant "FilterSecurityInterceptor"
+
+"User Agent" -> "FilterProxyChain": call /secure.html
+
+"FilterProxyChain" -> "FilterSecurityInterceptor": invoke
+"FilterSecurityInterceptor" -> "FilterSecurityInterceptor": beforeInvoke
+"FilterSecurityInterceptor" -> "AccessDecision": decide (anonymousAuthenticationToken,..)
+"ExceptionTranslationFilter" <- "AccessDecision": throw AccessDeniedException
+"ExceptionTranslationFilter" -> "ExceptionTranslationFilter": handleSpringSecurityException
+"ExceptionTranslationFilter" -> "ExceptionTranslationFilter": sendStartAuthentication
+"ExceptionTranslationFilter" -> "DelegatingAuthenticationEntryPoint": commence
+"User Agent" <- "DelegatingAuthenticationEntryPoint": redirect /oauth2/authorization/keycloak
+
+"User Agent" -> "OAuth2AuthorizationRequestRedirectFilter": call /oauth2/authorization/keycloak
+"User Agent" <- "OAuth2AuthorizationRequestRedirectFilter": redirect 302: to /auth endpoint
+
+"User Agent" -> "Keycloak": call to /auth endpoint
+"User Agent" <- "Keycloak": "ok 200: Login Page"
+"User Agent" -> "Keycloak": "user credentials"
+"User Agent" <- "Keycloak": redirect /login/oauth2/code/keycloak
+
+"User Agent" -> "AbstractAuthenticationProcessingFilter": "call /login/oauth2/code/keycloak"
+
+"AbstractAuthenticationProcessingFilter" -> "AbstractAuthenticationProcessingFilter": "attemptAuthentication"
+"AbstractAuthenticationProcessingFilter" -> "HttpSessionOAuth2AuthorizationRequestRepository": "removeAuthorizationRequest"
+"AbstractAuthenticationProcessingFilter" -> "ClientRegistrationRepository": "findByRegistrationId"
+
+"AbstractAuthenticationProcessingFilter" -> "OAuth2LoginAuthenticationProvider"
+
+participant "OAuth2AuthorizationRequest"
+
+
+"User Agent" <- "FilterProxyChain": "redirect /secure.html"
+
+"User Agent" -> "FilterProxyChain": "call /secure.html"
+
+"User Agent" <- "FilterProxyChain": "ok /secure.html"
+
+
+@enduml

@@ -1,0 +1,104 @@
+@startuml
+
+!include ../styling.iuml
+
+abstract class AbstractAuthenticationProcessingFilter {
+   {abstract} attemptAuthentication(HttpServletRequest req, HttpServletResponse resp): Authentication
+}
+
+
+class ClientRegistration <<final>> {
+    registrationId: String
+    clientId: String
+    clientSecret: String
+    clientAuthenticationMethod: ClientAuthenticationMethod
+    authorizationGrantType: AuthorizationGrantType
+    redirectUriTemplate: String
+    scopes: String[]
+    providerDetails: ProviderDetails
+    clientName: String
+}
+
+
+class OAuth2LoginAuthenticationFilter
+class UsernamePasswordAuthenticationFilter
+class OAuth2AuthorizedClientRepository
+
+interface OAuth2AuthorizedClientRepository {
+    loadAuthorizedClient(clientRegistrationId:String, principal:Authentication,request:HttpServletRequest):OAuth2AuthorizedClient
+    saveAuthorizedClient(authorizedClient: OAuth2AuthorizedClient, principal:Authentication):void
+    removeAuthorizedClient(clientRegistrationId:String, principal:Authentication):void
+}
+
+interface ClientRegistrationRepository {
+    findByRegistrationId(regisrationId:String):ClientRegistration
+}
+
+interface AuthenticationManager {
+    authenticate(authentication:Authentication):Authentication
+}
+'    authentication(authenticationRequest:OAuth2LoginAuthenticationToken):OAuth2LoginAuthenticationToken
+
+class AuthenticatedPrincipalOAuth2AuthorizedClientRepository implements OAuth2AuthorizedClientRepository
+
+
+AbstractAuthenticationProcessingFilter --> AuthenticationManager
+
+interface AuthenticationProvider {
+    authenticate(authentication:Authentication):Authentication
+    supports(authentication:Class):boolean
+}
+
+
+interface OAuth2UserService<R extends OAuth2UserRequest, U extends OAuth2User> {
+    loadUser(userRequest:R):U
+}
+
+class ProviderManager implements AuthenticationManager
+
+
+
+AbstractAuthenticationProcessingFilter <|-- UsernamePasswordAuthenticationFilter
+AbstractAuthenticationProcessingFilter <|-- OAuth2LoginAuthenticationFilter
+
+OAuth2LoginAuthenticationFilter --> "authorizedClientRepository" OAuth2AuthorizedClientRepository
+OAuth2LoginAuthenticationFilter --> "clientRegistrationRepository" ClientRegistrationRepository
+
+interface GrantedAuthoritiesMapper {
+    mapAuthorities(authorities:GrantedAuthority[]):GrantedAuthority[]
+}
+
+class OAuth2AuthorizationRequestRedirectFilter
+
+class OAuth2AuthorizationRequest <<final>> {
+    authorizationUri: String
+    authorizationGrantType: AuthorizationGrantType
+    clientId:String
+    redirectUri: String
+    scopes:String[]
+    state:String
+    additionalParameters:Map<String,Object>
+    authorizationRequestUri:String
+    attributes: Map<String, Object>
+}
+
+interface OAuth2ParameterNames {
+    GRANT_TYPE
+    RESPONSE_TYPE
+    CLIENT_ID
+    CLIENT_SECRET
+    REDIRECT_URI
+    SCOPE
+    STATE
+    CODE
+    ACCESS_TOKEN
+    EXPIRES_IN
+    REFRESH_TOKEN
+    USERNAME
+    PASSWORD
+    ERROR_DESCRIPTION
+    ERROR_URI
+    REGISTRATION_ID
+}
+
+@enduml
