@@ -29,6 +29,10 @@ Accept: application/json
 token={{access_token}}
 
 ### Refresh Token
+POST {{auth-url}}/auth/realms/{{realm}}/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=refresh_token&refresh_token={{refresh_token}}&client_id={{intro-client-id}}&client_secret={{intro-client-secret}}
 
 
 ### Get Authentication Token By Resource Owner Password Credentials Grant Flow

@@ -1,9 +1,9 @@
-# CloudBay - Cloud Native Performance Tuning Example
+# CloudBay - Cloud Native Security And Performance Tuning Demo
 ## 30/08/20 by Ingo Düppe by [CROWDCODE](https://www.crowdcode.io)
 
 ## General Setup
 
-Using Spring Boot 2.3.3 on Java Language Level 8.
+Using Spring Boot 2.3.3 on Java Language Level 11.
 
 
 ![deployment diagram](documents/images/cloudbay_services.png)
