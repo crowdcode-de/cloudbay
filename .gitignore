@@ -3,3 +3,5 @@ target
 *.iml
 /domain-services/auction-service/memory-guzzler.csv
 /domain-services/auction-service/cloudbay-h2-db.mv.db
+/cloudbay-h2-db.mv.db
+/memory-guzzler.csv
