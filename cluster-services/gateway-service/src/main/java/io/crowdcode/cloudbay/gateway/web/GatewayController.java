@@ -21,13 +21,14 @@ public class GatewayController {
 
     @GetMapping("/version")
     public ResponseEntity<String> version() {
-        return ResponseEntity.ok("{\"version\": \""+version+"\"}");
+        return ResponseEntity.ok("{\"version\": \"" + version + "\"}");
     }
 
     @GetMapping("/userinfo")
     public ResponseEntity<String> username(Authentication authentication) {
-        log.info("{}",authentication);
-        return ResponseEntity.ok("{\"username\":\""+authentication.getName()+"\"}");
+        log.info("{}", authentication);
+//        SecurityContextHolder.getContext().getAuthentication();
+        return ResponseEntity.ok("{\"username\":\"" + authentication.getName() + "\"}");
     }
 
 }
