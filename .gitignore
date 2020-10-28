@@ -5,3 +5,6 @@ target
 /domain-services/auction-service/cloudbay-h2-db.mv.db
 /cloudbay-h2-db.mv.db
 /memory-guzzler.csv
+logs/
+cloudbay-h2-db.mv.db
+cloudbay-h2-db.trace.db
