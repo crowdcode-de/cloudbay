@@ -3,23 +3,23 @@
 !include ../styling.iuml
 
 actor "User Agent"
-participant "Keycloak"
-participant "FilterProxyChain"
-participant "ExceptionTranslationFilter"
-participant "DelegatingAuthenticationEntryPoint"
+participant "Keycloak\n"
+participant "FilterProxyChain\n"
+participant "Exception\nTranslationFilter"
+participant "Delegating\nAuthenticationEntryPoint"
 
-participant "FilterSecurityInterceptor"
+participant "FilterSecurity\nInterceptor"
 
-"User Agent" -> "FilterProxyChain": call /secure.html
+"User Agent" -> "FilterProxyChain\n": call /secure.html
 
-"FilterProxyChain" -> "FilterSecurityInterceptor": invoke
-"FilterSecurityInterceptor" -> "FilterSecurityInterceptor": beforeInvoke
-"FilterSecurityInterceptor" -> "AccessDecision": decide (anonymousAuthenticationToken,..)
-"ExceptionTranslationFilter" <- "AccessDecision": throw AccessDeniedException
-"ExceptionTranslationFilter" -> "ExceptionTranslationFilter": handleSpringSecurityException
-"ExceptionTranslationFilter" -> "ExceptionTranslationFilter": sendStartAuthentication
-"ExceptionTranslationFilter" -> "DelegatingAuthenticationEntryPoint": commence
-"User Agent" <- "DelegatingAuthenticationEntryPoint": redirect /oauth2/authorization/keycloak
+"FilterProxyChain\n" -> "FilterSecurity\nInterceptor": invoke
+"FilterSecurityInterceptor\n" -> "FilterSecurity\nInterceptor": beforeInvoke
+"FilterSecurityInterceptor\n" -> "AccessDecision\n": decide \n(anonymousAuthenticationToken,..)
+"Exception\nTranslationFilter" <- "AccessDecision\n": throw AccessDeniedException
+"Exception\nTranslationFilter" -> "Exception\nTranslationFilter": handleSpringSecurityException
+"Exception\nTranslationFilter" -> "Exception\nTranslationFilter": sendStartAuthentication
+"Exception\nTranslationFilter" -> "Delegating\nAuthenticationEntryPoint": commence
+"User Agent" <- "Delegating\nAuthenticationEntryPoint": redirect /oauth2/authorization/keycloak
 
 
 

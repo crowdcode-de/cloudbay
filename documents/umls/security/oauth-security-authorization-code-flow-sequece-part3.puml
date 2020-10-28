@@ -2,29 +2,27 @@
 
 !include ../styling.iuml
 
+
 actor "User Agent"
-participant "Keycloak"
-participant "AbstractAuthenticationProcessingFilter"
-participant "AuthenticationManager"
-participant "OAuth2LoginAuthenticationProvider"
-participant "OAuth2LoginAuthenticationProvider"
+participant "AbstractAuthentication\nProcessingFilter"
+participant "AbstractAuthentication\nProcessingFilter"
+participant "HttpSessionOAuth2\nAuthorizationRequestRepository"
+participant "ClientRegistration\nRepository"
+participant "Authentication\nManager"
+participant "OAuth2Login\nAuthenticationProvider"
 
+"User Agent" -> "AbstractAuthentication\nProcessingFilter": "call /login/oauth2/code/keycloak"
 
-"User Agent" -> "AbstractAuthenticationProcessingFilter": "call /login/oauth2/code/keycloak"
+"AbstractAuthentication\nProcessingFilter" -> "AbstractAuthentication\nProcessingFilter": "attemptAuthentication"
+"AbstractAuthentication\nProcessingFilter" -> "HttpSessionOAuth2\nAuthorizationRequestRepository": "removeAuthorizationRequest"
+"AbstractAuthentication\nProcessingFilter" -> "ClientRegistration\nRepository": "findByRegistrationId"
+"AbstractAuthentication\nProcessingFilter" -> "ClientRegistration\nRepository": "findByRegistrationId"
 
-"AbstractAuthenticationProcessingFilter" -> "AbstractAuthenticationProcessingFilter": "attemptAuthentication"
-"AbstractAuthenticationProcessingFilter" -> "HttpSessionOAuth2AuthorizationRequestRepository": "removeAuthorizationRequest"
-"AbstractAuthenticationProcessingFilter" -> "ClientRegistrationRepository": "findByRegistrationId"
-"AbstractAuthenticationProcessingFilter" -> "ClientRegistrationRepository": "findByRegistrationId"
-
-"AbstractAuthenticationProcessingFilter" -> "AuthenticationManager" : authenticate
-"AuthenticationManager" -> "OAuth2LoginAuthenticationProvider" : authenticate
-"OAuth2LoginAuthenticationProvider" -> "OAuth2AuthorizationCodeAuthenticationProvider" : authenticate
-"OAuth2LoginAuthenticationProvider" <- "OAuth2AuthorizationCodeAuthenticationProvider" : authenticate
-"AuthenticationManager" <- "OAuth2LoginAuthenticationProvider" : authenticate
-
-
-
+"AbstractAuthentication\nProcessingFilter" -> "Authentication\nManager" : authenticate
+"Authentication\nManager" -> "OAuth2Login\nAuthenticationProvider" : authenticate
+"OAuth2Login\nAuthenticationProvider" -> "OAuth2AuthorizationCode\nAuthenticationProvider" : authenticate
+"OAuth2Login\nAuthenticationProvider" <- "OAuth2AuthorizationCode\nAuthenticationProvider" : authenticate
+"Authentication\nManager" <- "OAuth2Login\nAuthenticationProvider" : authenticate
 
 
 @enduml

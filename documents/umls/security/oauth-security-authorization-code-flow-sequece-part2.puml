@@ -3,17 +3,17 @@
 !include ../styling.iuml
 
 actor "User Agent"
-participant "Keycloak"
-participant "FilterProxyChain"
-participant "OAuth2AuthorizationRequestRedirectFilter"
+participant "Keycloak\n"
+participant "FilterProxyChain\n"
+participant "OAuth2Authorization\nRequestRedirectFilter"
 
-"User Agent" -> "OAuth2AuthorizationRequestRedirectFilter": call /oauth2/authorization/keycloak
-"User Agent" <- "OAuth2AuthorizationRequestRedirectFilter": redirect 302: to /auth endpoint
+"User Agent" -> "OAuth2Authorization\nRequestRedirectFilter": call /oauth2/authorization/keycloak
+"User Agent" <- "OAuth2Authorization\nRequestRedirectFilter": redirect 302: to /auth endpoint
 
-"User Agent" -> "Keycloak": call to /auth endpoint
-"User Agent" <- "Keycloak": "ok 200: Login Page"
-"User Agent" -> "Keycloak": "user credentials"
-"User Agent" <- "Keycloak": redirect /login/oauth2/code/keycloak
+"User Agent" -> "Keycloak\n": call to /auth endpoint
+"User Agent" <- "Keycloak\n": "ok 200: Login Page"
+"User Agent" -> "Keycloak\n": "user credentials"
+"User Agent" <- "Keycloak\n": redirect /login/oauth2/code/keycloak
 
 
 
