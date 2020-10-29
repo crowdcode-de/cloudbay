@@ -1,0 +1,19 @@
+@startuml
+
+!include ../styling.iuml
+
+actor "User Agent"
+participant "FilterChainProxy\n"
+participant "Abstract\nAuthenticationFilter"
+
+activate "Abstract\nAuthenticationFilter"
+
+"Abstract\nAuthenticationFilter" -> "Abstract\nAuthenticationFilter": successfulAuthentication()
+activate "Abstract\nAuthenticationFilter"
+"Abstract\nAuthenticationFilter" -> "SecurityContext\nHolder": getContext()
+"SecurityContext\nHolder" -> "SecurityContext\n": setAuthentication(authResult)
+deactivate "Abstract\nAuthenticationFilter"
+deactivate "Abstract\nAuthenticationFilter"
+
+"FilterChainProxy\n" <- "Abstract\nAuthenticationFilter"
+@enduml
