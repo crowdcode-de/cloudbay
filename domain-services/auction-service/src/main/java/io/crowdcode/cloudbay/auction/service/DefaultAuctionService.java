@@ -31,10 +31,9 @@ import java.util.stream.Collectors;
 @Profile({"!expired & !readwrite"})
 public class DefaultAuctionService implements AuctionService {
 
-
     protected Map<String, Auction> activeAuctions = new HashMap<>();
 
-    private AuctionRepository auctionRepository;
+    private final AuctionRepository auctionRepository;
     @Value("${shouldThrowExceptions:false}")
     private boolean shouldThrowExceptions = true;
     private long counter = 0;

@@ -26,7 +26,7 @@ import java.util.List;
 @RequestMapping("/auctions")
 public class AuctionController {
 
-    private AuctionService auctionEngine;
+    private final AuctionService auctionEngine;
 
     public AuctionController(AuctionService auctionEngine) {
         this.auctionEngine = auctionEngine;

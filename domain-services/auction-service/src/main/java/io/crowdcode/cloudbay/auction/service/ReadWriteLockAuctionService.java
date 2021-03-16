@@ -34,9 +34,9 @@ public class ReadWriteLockAuctionService implements AuctionService {
 
     protected Map<String, Auction> activeAuctions = new ConcurrentHashMap<>();
 
-    private AuctionRepository auctionRepository;
+    private final AuctionRepository auctionRepository;
 
-    private ReadWriteLock lock = new ReentrantReadWriteLock(true);
+    private final ReadWriteLock lock = new ReentrantReadWriteLock(true);
 
     public ReadWriteLockAuctionService(AuctionRepository auctionRepository) {
         this.auctionRepository = auctionRepository;

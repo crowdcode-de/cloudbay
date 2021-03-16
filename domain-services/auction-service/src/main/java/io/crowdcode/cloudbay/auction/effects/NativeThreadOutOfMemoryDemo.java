@@ -5,9 +5,9 @@ import java.util.concurrent.atomic.AtomicLong;
 
 public class NativeThreadOutOfMemoryDemo {
 
-    private static AtomicLong summary = new AtomicLong();
+    private static final AtomicLong summary = new AtomicLong();
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
 
         ThreadGroup group = new ThreadGroup("thread-stack");
 
@@ -18,14 +18,13 @@ public class NativeThreadOutOfMemoryDemo {
             new Thread(group, "Thread-" + i) {
                 @Override
                 public void run() {
-                    long value = 0;
                     while (true) {
                         try {
                             recursiveSleep(512*1024); // kill it
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-                        value = increaseAmount();
+                        increaseAmount();
                     }
                 }
             }.start();

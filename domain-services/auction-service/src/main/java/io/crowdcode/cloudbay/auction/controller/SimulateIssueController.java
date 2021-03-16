@@ -10,22 +10,22 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class SimulateIssueController {
 
-    private MemoryGuzzler memoryGuzzler;
+    private final MemoryGuzzler memoryGuzzler;
 
     public SimulateIssueController(MemoryGuzzler memoryGuzzler) {
         this.memoryGuzzler = memoryGuzzler;
     }
 
     @PutMapping("/guzzler/start")
-    public ResponseEntity<String> startSpeicherfresser() {
+    public ResponseEntity<String> startMemoryGuzzler() {
         memoryGuzzler.start();
-        return ResponseEntity.ok("Starting memory wasting");
+        return ResponseEntity.ok("{\"message\":\"Starting memory wasting\"}");
     }
 
     @PutMapping("/guzzler/stop")
-    public ResponseEntity<String> stopSpeicherfresser() {
+    public ResponseEntity<String> stopMemoryGuzzler() {
         memoryGuzzler.stop();
-        return ResponseEntity.ok("Stopping memory wasting");
+        return ResponseEntity.ok("{\"message\":\"Stopping memory wasting\"}");
     }
 
 

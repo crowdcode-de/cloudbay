@@ -33,7 +33,7 @@ public class PersistOnlyExpiredAuctionService implements AuctionService {
 
     protected Map<String, Auction> activeAuctions = new HashMap<>();
 
-    private AuctionRepository auctionRepository;
+    private final AuctionRepository auctionRepository;
     private long counter;
 
     @Value("${shouldThrowExceptions:false}")

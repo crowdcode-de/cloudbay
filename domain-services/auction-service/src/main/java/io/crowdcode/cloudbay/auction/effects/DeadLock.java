@@ -2,8 +2,8 @@ package io.crowdcode.cloudbay.auction.effects;
 
 public class DeadLock {
 
-    private Object monitorA = new Object();
-    private Object monitorB = new Object();
+    private final Object monitorA = new Object();
+    private final Object monitorB = new Object();
 
     private volatile boolean stepA = false;
     private volatile boolean stepB = false;
