@@ -54,6 +54,6 @@ General helper classes needed by nearby all services.
 
 CloudBay Spring Boot Parent including some general settings and dependencies.
 
-# Copyright
+## Copyright
 
 &copy; Copyright 2020 by CROWDCODE GmbH &amp; Co. KG
