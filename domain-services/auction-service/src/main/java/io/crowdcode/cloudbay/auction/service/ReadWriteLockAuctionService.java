@@ -91,8 +91,8 @@ public class ReadWriteLockAuctionService implements AuctionService {
     }
 
     @Override
-    public void placeBidOnProduct(String productUiid, Bid bid) throws ProductNotFoundException, BidTooLowException, InvalidAuctionStateException {
-        Auction auction = retrieveAuction(productUiid);
+    public void placeBidOnProduct(String productUuid, Bid bid) throws ProductNotFoundException, BidTooLowException, InvalidAuctionStateException {
+        Auction auction = retrieveAuction(productUuid);
         auction.addBid(bid);
     }
 

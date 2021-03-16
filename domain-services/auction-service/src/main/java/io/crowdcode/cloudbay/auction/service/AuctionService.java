@@ -44,10 +44,10 @@ public interface AuctionService {
 
 
     /**
-     * @param productUiid
+     * @param productUuid
      * @param bid
      */
-    void placeBidOnProduct(String productUiid, Bid bid) throws ProductNotFoundException, BidTooLowException, InvalidAuctionStateException;
+    void placeBidOnProduct(String productUuid, Bid bid) throws ProductNotFoundException, BidTooLowException, InvalidAuctionStateException;
 
 
     /**
