@@ -45,3 +45,15 @@ services:
       - "14268:14268"
       - "14250:14250"
       - "9411:9411"
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - "9099:9099"
+    volumes:
+      - ../prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    stdin_open: true
+    tty: true
+  grafana:
+    image: grafana/grafana
+    ports:
+      - 3000:3000
