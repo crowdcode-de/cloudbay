@@ -3,9 +3,9 @@ services:
   mailtrap:
     build: ../mailtrap
     ports:
-    - 80:80
-    - 25:25
-    - 110:110
+      - 80:80
+      - 25:25
+      - 110:110
   postgres:
     image: postgres
     environment:
@@ -13,7 +13,7 @@ services:
     stdin_open: true
     tty: true
     ports:
-    - 5432:5432
+      - 5432:5432
   keycloak:
     image: jboss/keycloak
     environment:
@@ -26,12 +26,12 @@ services:
       DB_USER: postgres
       DB_PASSWORD: masterkey
     volumes:
-    - ../keycloak/realm-cloudbay.json:/tmp/realm-cloudbay.json
+      - ../keycloak/realm-cloudbay.json:/tmp/realm-cloudbay.json
     stdin_open: true
     tty: true
     ports:
-    - 8200:8080
-    - 9090:9090
+      - 8200:8080
+      - 9090:9090
     links:
       - postgres:postgres
   jaeger:
