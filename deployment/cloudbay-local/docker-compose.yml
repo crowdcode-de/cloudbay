@@ -48,7 +48,7 @@ services:
   prometheus:
     image: prom/prometheus
     ports:
-      - "9099:9099"
+      - "9099:9090"
     volumes:
       - ../prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
     stdin_open: true
