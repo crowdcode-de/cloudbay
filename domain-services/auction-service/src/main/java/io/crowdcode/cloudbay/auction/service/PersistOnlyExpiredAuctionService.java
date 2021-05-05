@@ -170,7 +170,7 @@ public class PersistOnlyExpiredAuctionService implements AuctionService {
     }
 
     private AuctionSummary mapToSummary(Auction auction) {
-        valideAuction(auction);
+        validAuction(auction);
         return new AuctionSummary()
                 .setExpiresAt(auction.getExpireDateTime())
                 .setHighestBid(auction.getHighestBid())
@@ -178,7 +178,7 @@ public class PersistOnlyExpiredAuctionService implements AuctionService {
                 .setProductUuid(auction.getProduct().getProductUuid());
     }
 
-    private void valideAuction(Auction auction) {
+    private void validAuction(Auction auction) {
         if (shouldThrowExceptions) {
             try {
                 counter++;
