@@ -18,7 +18,7 @@ services:
     image: jboss/keycloak
     environment:
       KEYCLOAK_USER: admin
-      KEYCLOAK_PASSWORD: 4d1m!
+      KEYCLOAK_PASSWORD: 4dm1n!
       KEYCLOAK_IMPORT: /tmp/realm-cloudbay.json
       DB_VENDOR: postgres
       DB_ADDR: postgres
