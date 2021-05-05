@@ -42,3 +42,10 @@ POST {{token_endpoint}}
 Content-Type: application/x-www-form-urlencoded
 
 grant_type=refresh_token&refresh_token={{refresh_token}}&client_id={{intro-client-id}}&client_secret={{intro-client-secret}}
+
+### Revoke Token - intro client
+POST {{revocation_endpoint}}
+Authorization: Basic {{intro-client-id}} {{intro-client-secret}}
+Content-Type: application/x-www-form-urlencoded
+
+token={{refresh_token}}&token_type_hint=refresh_token
