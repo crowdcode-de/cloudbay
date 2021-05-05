@@ -10,6 +10,7 @@ GET {{auth-url}}/auth/realms/{{realm}}/.well-known/openid-configuration
   client.global.set("end_session_endpoint", response.body.end_session_endpoint);
   client.global.set("jwks_uri", response.body.jwks_uri);
   client.global.set("check_session_iframe", response.body.check_session_iframe);
+  client.global.set("revocation_endpoint", response.body.revocation_endpoint);
 %}
 
 ### JWKS
