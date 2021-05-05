@@ -1,0 +1,120 @@
+### 01 Well-Known URL OpenID Connect
+GET {{auth-url}}/auth/realms/{{realm}}/.well-known/openid-configuration
+
+> {%
+  client.global.set("issuer", response.body.issuer);
+  client.global.set("authorization_endpoint", response.body.authorization_endpoint);
+  client.global.set("token_endpoint", response.body.token_endpoint);
+  client.global.set("introspection_endpoint", response.body.introspection_endpoint);
+  client.global.set("userinfo_endpoint", response.body.userinfo_endpoint);
+  client.global.set("end_session_endpoint", response.body.end_session_endpoint);
+  client.global.set("jwks_uri", response.body.jwks_uri);
+  client.global.set("check_session_iframe", response.body.check_session_iframe);
+  client.global.set("revocation_endpoint", response.body.revocation_endpoint);
+%}
+
+### 02 JWKS
+GET {{jwks_uri}}
+
+### 03 Realm Issuer Uri
+GET {{auth-url}}/auth/realms/{{realm}}
+Accept: application/json
+
+### 04 Client Credentials - AccessToken for Intro Service
+POST {{token_endpoint}}
+Content-Type: application/x-www-form-urlencoded
+Accept: application/json
+
+grant_type=client_credentials&client_id={{intro-client-id}}&client_secret={{intro-client-secret}}
+
+> {%
+  client.global.set("access_token", response.body.access_token);
+  client.global.set("refresh_token", response.body.refresh_token);
+%}
+
+### 05 Token Introspection
+POST {{introspection_endpoint}}
+Authorization: Basic {{intro-client-id}} {{intro-client-secret}}
+Content-Type: application/x-www-form-urlencoded
+Accept: application/json
+
+token={{access_token}}
+
+
+### 06 User Info Token - Fehler in KeyCloak - Missconfiguration?
+POST {{userinfo_endpoint}}
+Authorization: Bearer {{access_token}}
+
+### 07 - Refresh Token Grant Flow
+POST {{token_endpoint}}
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=refresh_token&refresh_token={{refresh_token}}&client_id={{intro-client-id}}&client_secret={{intro-client-secret}}
+
+
+### 08 - Revoke Token - intro client
+POST {{revocation_endpoint}}
+Authorization: Basic {{intro-client-id}} {{intro-client-secret}}
+Content-Type: application/x-www-form-urlencoded
+
+token={{refresh_token}}&token_type_hint=refresh_token
+
+### 09 Recheck access token by introspection
+POST {{introspection_endpoint}}
+Authorization: Basic {{intro-client-id}} {{intro-client-secret}}
+Content-Type: application/x-www-form-urlencoded
+Accept: application/json
+
+token={{access_token}}
+
+### 10 Token for User "user"
+POST {{token_endpoint}}
+Content-Type: application/x-www-form-urlencoded
+Accept: application/json
+
+grant_type=password&username={{username}}&password={{password}}&client_id={{manual-test-client-id}}&client_secret={{manual-test-client-secret}}
+
+> {%
+  client.global.set("access_token", response.body.access_token);
+  client.global.set("refresh_token", response.body.refresh_token);
+%}
+
+### 10 Recheck access token by introspection
+POST {{introspection_endpoint}}
+Authorization: Basic {{intro-client-id}} {{intro-client-secret}}
+Content-Type: application/x-www-form-urlencoded
+Accept: application/json
+
+token={{access_token}}
+
+### 11 User Info Token - Fehler in KeyCloak - Missconfiguration?
+POST {{userinfo_endpoint}}
+Authorization: Bearer {{access_token}}
+
+### 12 - Refresh Token Grant Flow - Invalid Match
+POST {{token_endpoint}}
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=refresh_token&refresh_token={{refresh_token}}&client_id={{intro-client-id}}&client_secret={{intro-client-secret}}
+
+
+### 13 - Refresh Token Grant Flow - Invalid Match
+POST {{token_endpoint}}
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=refresh_token&refresh_token={{refresh_token}}&client_id={{manual-test-client-id}}&client_secret={{manual-test-client-secret}}
+
+### 13 - Revoke Token - intro client
+POST {{revocation_endpoint}}
+Authorization: Basic {{manual-test-client-id}} {{manual-test-client-secret}}
+Content-Type: application/x-www-form-urlencoded
+
+token={{refresh_token}}&token_type_hint=refresh_token
+
+### 14 Recheck access token by introspection
+POST {{introspection_endpoint}}
+Authorization: Basic {{intro-client-id}} {{intro-client-secret}}
+Content-Type: application/x-www-form-urlencoded
+Accept: application/json
+
+token={{access_token}}
