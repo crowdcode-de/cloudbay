@@ -36,7 +36,7 @@ public class PersistOnlyExpiredAuctionService implements AuctionService {
     private final AuctionRepository auctionRepository;
     private long counter;
 
-    @Value("${shouldThrowExceptions:false}")
+    @Value("${shouldThrowExceptions:true}")
     private boolean shouldThrowExceptions = true;
 
     public PersistOnlyExpiredAuctionService(AuctionRepository auctionRepository) {

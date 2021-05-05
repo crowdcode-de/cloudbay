@@ -34,7 +34,7 @@ public class DefaultAuctionService implements AuctionService {
     protected Map<String, Auction> activeAuctions = new HashMap<>();
 
     private final AuctionRepository auctionRepository;
-    @Value("${shouldThrowExceptions:false}")
+    @Value("${shouldThrowExceptions:true}")
     private boolean shouldThrowExceptions = true;
     private long counter = 0;
 
