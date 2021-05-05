@@ -126,7 +126,7 @@ public class DefaultAuctionService implements AuctionService {
     }
 
     private AuctionSummary mapToSummary(Auction auction) {
-        valideAuction(auction);
+        validAuction(auction);
 
         return new AuctionSummary()
                 .setExpiresAt(auction.getExpireDateTime())
@@ -135,7 +135,7 @@ public class DefaultAuctionService implements AuctionService {
                 .setProductUuid(auction.getProduct().getProductUuid());
     }
 
-    private void valideAuction(Auction auction) {
+    private void validAuction(Auction auction) {
         if (shouldThrowExceptions) {
             try {
                 counter++;
