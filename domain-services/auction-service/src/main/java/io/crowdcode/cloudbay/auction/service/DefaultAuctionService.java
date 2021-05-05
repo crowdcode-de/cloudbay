@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 @Transactional
-@Profile({"!expired & !readwrite"})
+@Profile({"!expired & !readwrite & !memory"})
 public class DefaultAuctionService implements AuctionService {
 
     protected Map<String, Auction> activeAuctions = new HashMap<>();
