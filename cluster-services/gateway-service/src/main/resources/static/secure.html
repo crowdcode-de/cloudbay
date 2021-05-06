@@ -8,8 +8,9 @@
 <body>
 <h1>GATEWAY</h1><br>
 <p>
-    Version: <span id="version"></span><br/>
-    User: <span id="username"></span><br>
+    Version: <span id="version">xxx</span><br/>
+    User: <span id="username">xxx</span><br/>
+    Roles: <span id="roles">xxx</span><br/>
 </p>
 
 <span id="error" style="color:red"></span>
@@ -35,6 +36,15 @@
             setText("username", data['username']);
         })
         .catch(error => setText("error", error))
+
+    fetch("api/roles")
+        .then(async (response) => {
+            let data = await response.json();
+            console.log(data);
+            setText("roles", data['roles']);
+        })
+        .catch(error => setText("error", error))
+
 
 </script>
 </html>
