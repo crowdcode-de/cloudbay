@@ -1,0 +1,43 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: secure-gateway
+
+  security:
+    oauth2:
+      client:
+        provider:
+          cloudbay:
+            issuer-uri: http://localhost:8200/auth/realms/cloudbay
+            user-name-attribute: preferred_username
+        registration:
+          cloudbay:
+            client-id: gateway-service
+            client-secret: 6c3f5c12-00ad-4032-928e-07351e6a47ec
+            scope: email,profile
+
+  cloud:
+    gateway:
+      default-filters:
+        - TokenRelay
+      routes:
+        - id: userinfo-service
+          uri: http://localhost:8100
+          predicates:
+            - Path=/userinfo/**
+          filters:
+            - RemoveRequestHeader=Cookie
+        - id: time-service
+          uri: http://localhost:8500
+          predicates:
+            - Path=/timeservice
+          filters:
+            - RemoveRequestHeader=Cookie
+        - id: catalog-service
+          uri: http://localhost:9020
+          predicates:
+            - Path=/catalog-service
+          filters:
+            - RemoveRequestHeader=Cookie
