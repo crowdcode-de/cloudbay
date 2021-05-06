@@ -33,7 +33,9 @@
         <module>domain-services/catalog-service</module>
         <module>domain-services/greeting-service</module>
         <module>domain-services/auction-service</module>
+        <module>domain-services/userinfo-service</module>
         <module>cluster-services/gateway-service</module>
+        <module>cluster-services/secure-gateway</module>
     </modules>
 
 </project>
