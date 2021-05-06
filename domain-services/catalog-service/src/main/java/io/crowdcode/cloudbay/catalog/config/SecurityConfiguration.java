@@ -1,8 +1,10 @@
 package io.crowdcode.cloudbay.catalog.config;
 
+import io.crowdcode.cloudbay.catalog.security.keycloak.KeycloakJwtGrantedAuthoritiesConverter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.web.cors.CorsConfiguration;
 
 /**
@@ -28,6 +30,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 .anyRequest()
-                .permitAll();
+                .authenticated()
+                .and()
+                .oauth2ResourceServer()
+                .jwt().jwtAuthenticationConverter(jwtAuthenticationConverter());
+    }
+
+    public JwtAuthenticationConverter jwtAuthenticationConverter() {
+        JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
+        jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(new KeycloakJwtGrantedAuthoritiesConverter());
+        return jwtAuthenticationConverter;
     }
 }
