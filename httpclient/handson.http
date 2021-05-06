@@ -20,7 +20,7 @@ GET {{jwks_uri}}
 GET {{auth-url}}/auth/realms/{{realm}}
 Accept: application/json
 
-### 04 Client Credentials - AccessToken for Intro Service
+### 04 Client Credentials Grant Flow - AccessToken for Intro Service
 POST {{token_endpoint}}
 Content-Type: application/x-www-form-urlencoded
 Accept: application/json
@@ -45,6 +45,7 @@ token={{access_token}}
 POST {{userinfo_endpoint}}
 Authorization: Bearer {{access_token}}
 
+
 ### 07 - Refresh Token Grant Flow
 POST {{token_endpoint}}
 Content-Type: application/x-www-form-urlencoded
@@ -67,7 +68,7 @@ Accept: application/json
 
 token={{access_token}}
 
-### 10 Token for User "user"
+### 10 Token for User "user" - Credentials Grant Flow
 POST {{token_endpoint}}
 Content-Type: application/x-www-form-urlencoded
 Accept: application/json
