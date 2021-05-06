@@ -1,0 +1,54 @@
+### 01 Well-Known URL OpenID Connect
+GET {{auth-url}}/auth/realms/{{realm}}/.well-known/openid-configuration
+
+> {%
+  client.global.set("issuer", response.body.issuer);
+  client.global.set("authorization_endpoint", response.body.authorization_endpoint);
+  client.global.set("token_endpoint", response.body.token_endpoint);
+  client.global.set("introspection_endpoint", response.body.introspection_endpoint);
+  client.global.set("userinfo_endpoint", response.body.userinfo_endpoint);
+  client.global.set("end_session_endpoint", response.body.end_session_endpoint);
+  client.global.set("jwks_uri", response.body.jwks_uri);
+  client.global.set("check_session_iframe", response.body.check_session_iframe);
+  client.global.set("revocation_endpoint", response.body.revocation_endpoint);
+%}
+
+### Token for User "user" - Credentials Grant Flow
+POST {{token_endpoint}}
+Content-Type: application/x-www-form-urlencoded
+Accept: application/json
+
+grant_type=password&username={{username}}&password={{password}}&client_id={{manual-test-client-id}}&client_secret={{manual-test-client-secret}}
+
+> {%
+  client.global.set("access_token", response.body.access_token);
+  client.global.set("refresh_token", response.body.refresh_token);
+%}
+
+
+### List All Products
+GET http://localhost:9020/catalog-service/api/products
+Accept: application/json
+
+### List All Products
+GET http://localhost:9020/catalog-service/api/products
+Authorization: Bearer {{access_token}}
+Accept: application/json
+
+### Add a Product
+POST http://localhost:9020/catalog-service/api/products
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+
+{
+  "amount": 0.75,
+  "description": "string",
+  "retailPrice": 1.5,
+  "sku": "TESTSKU",
+  "tags": [
+    "Limo", "Cola", "Münster"
+  ],
+  "title": "Liba Cola",
+  "unit": "Liter"
+}
+
