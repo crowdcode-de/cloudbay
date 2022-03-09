@@ -99,11 +99,16 @@ Content-Type: application/x-www-form-urlencoded
 grant_type=refresh_token&refresh_token={{refresh_token}}&client_id={{intro-client-id}}&client_secret={{intro-client-secret}}
 
 
-### 13 - Refresh Token Grant Flow - Invalid Match
+### 13 - Refresh Token Grant Flow - Match
 POST {{token_endpoint}}
 Content-Type: application/x-www-form-urlencoded
 
 grant_type=refresh_token&refresh_token={{refresh_token}}&client_id={{manual-test-client-id}}&client_secret={{manual-test-client-secret}}
+
+> {%
+  client.global.set("access_token", response.body.access_token);
+  client.global.set("refresh_token", response.body.refresh_token);
+%}
 
 ### 13 - Revoke Token - intro client
 POST {{revocation_endpoint}}
