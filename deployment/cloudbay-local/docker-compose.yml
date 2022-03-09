@@ -1,7 +1,7 @@
 version: "3"
 services:
   mailtrap:
-    build: ../mailtrap
+    image: dbck/mailtrap:1.0.0
     ports:
       - 80:80
       - 25:25
