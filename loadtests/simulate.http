@@ -1,0 +1,14 @@
+### 1
+PUT http://localhost:8080/allocate/mem/512/20
+### 2
+PUT http://localhost:8080/allocate/mem/512/20
+### 3
+PUT http://localhost:8080/allocate/mem/512/20
+### 4
+PUT http://localhost:8080/allocate/mem/512/20
+### 5
+PUT http://localhost:8080/allocate/mem/512/20
+### 6
+PUT http://localhost:8080/allocate/mem/512/20
+### 7
+PUT http://localhost:8080/allocate/mem/512/20
