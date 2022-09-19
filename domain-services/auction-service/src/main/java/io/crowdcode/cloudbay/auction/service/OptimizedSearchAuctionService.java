@@ -9,10 +9,8 @@ import io.crowdcode.cloudbay.auction.exceptions.ProductNotFoundException;
 import io.crowdcode.cloudbay.auction.model.Auction;
 import io.crowdcode.cloudbay.auction.model.Bid;
 import io.crowdcode.cloudbay.auction.model.Product;
-import io.crowdcode.cloudbay.auction.repository.AuctionRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Profile;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -29,18 +27,18 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 @Transactional
-@ConditionalOnMissingBean(AuctionService.class)
-public class DefaultAuctionService implements AuctionService {
+@Profile("OptimizedSearch")
+public class OptimizedSearchAuctionService implements AuctionService {
 
     protected Map<String, Auction> activeAuctions = new HashMap<>();
 
-    private final AuctionRepository auctionRepository;
-    @Value("${shouldThrowExceptions:true}")
-    private boolean shouldThrowExceptions = true;
-    private long counter = 0;
+    private long counter;
 
-    public DefaultAuctionService(AuctionRepository auctionRepository) {
-        this.auctionRepository = auctionRepository;
+    @Value("${shouldThrowExceptions:false}")
+    private boolean shouldThrowExceptions = true;
+
+    public OptimizedSearchAuctionService() {
+        log.info("\n################################\nOptimizedSearch\n################################");
     }
 
     @Override
@@ -57,7 +55,6 @@ public class DefaultAuctionService implements AuctionService {
                     .setProduct(product);
 
             activeAuctions.put(uuid, auction);
-            auctionRepository.save(auction);
         }
         return uuid;
     }
@@ -67,10 +64,45 @@ public class DefaultAuctionService implements AuctionService {
         List<ProductInfo> matchingProducts = new ArrayList<>();
         if (searchTerm != null && searchTerm.length() > 0) {
             synchronized (activeAuctions) {
-                executeSearch(searchTerm, matchingProducts);
+                String normalizedSearchTerm = searchTerm.toUpperCase().trim();
+                executeSearch(normalizedSearchTerm, matchingProducts);
             }
         }
         return matchingProducts;
+    }
+
+    @Override
+    public Bid getHighestBidForProduct(String productUuid) throws ProductNotFoundException {
+        return retrieveAuction(productUuid).getHighestBid();
+    }
+
+    @Override
+    public AuctionSummary getAuctionSummary(String productUuid) throws ProductNotFoundException {
+        return mapToSummary(retrieveAuction(productUuid));
+    }
+
+    @Override
+    public void placeBidOnProduct(String productUuid, Bid bid) throws ProductNotFoundException, BidTooLowException, InvalidAuctionStateException {
+        Auction auction = retrieveAuction(productUuid);
+        auction.addBid(bid);
+    }
+
+    @Override
+    @Scheduled(fixedRate = 10_000)
+    public void handleExpiredAuctions() {
+        removeExpiredFromActive();
+    }
+
+    private void removeExpiredFromActive() {
+        synchronized (activeAuctions) {
+            activeAuctions.values().removeIf(Auction::isExpired);
+            log.info("Auctions: {}", activeAuctions.size());
+        }
+    }
+
+    @Override
+    public int activeAuctionCount() {
+        return activeAuctions.size();
     }
 
     protected void executeSearch(String searchTerm, List<ProductInfo> matchingProducts) {
@@ -87,37 +119,22 @@ public class DefaultAuctionService implements AuctionService {
         return matchesSearch(product.getTitle(), searchTerm) || matchesSearch(product.getDescription(), searchTerm);
     }
 
-    private ProductInfo mapToProductInfo(Product product) {
+    protected ProductInfo mapToProductInfo(Product product) {
         return new ProductInfo()
                 .setProductTitle(product.getTitle())
                 .setProductUuid(product.getProductUuid());
     }
 
     protected boolean matchesSearch(String value, String searchTerm) {
-        if (value != null && value.trim().length() > 0) {
-            return value.trim().toUpperCase().contains(searchTerm.toUpperCase().trim());
+        if (value != null) {
+            String normalizedValue = value.trim().toUpperCase();
+            return normalizedValue.contains(searchTerm);
         }
         return false;
     }
 
-    @Override
-    public Bid getHighestBidForProduct(String productUuid) throws ProductNotFoundException {
-        return auctionRepository
-                .findByProductProductUuid(productUuid)
-                .orElseThrow(ProductNotFoundException::new)
-                .getHighestBid();
-    }
-
-    @Override
-    public AuctionSummary getAuctionSummary(String productUuid) throws ProductNotFoundException {
-        return mapToSummary(retrieveAuction(productUuid));
-    }
-
     private Auction retrieveAuction(String productUuid) throws ProductNotFoundException {
         Auction auction = activeAuctions.get(productUuid);
-        if (auction == null) {
-            auctionRepository.findByProductProductUuid(productUuid);
-        }
         if (auction == null) {
             throw new ProductNotFoundException();
         }
@@ -125,8 +142,7 @@ public class DefaultAuctionService implements AuctionService {
     }
 
     private AuctionSummary mapToSummary(Auction auction) {
-        validAuction(auction);
-
+        valideAuction(auction);
         return new AuctionSummary()
                 .setExpiresAt(auction.getExpireDateTime())
                 .setHighestBid(auction.getHighestBid())
@@ -134,35 +150,17 @@ public class DefaultAuctionService implements AuctionService {
                 .setProductUuid(auction.getProduct().getProductUuid());
     }
 
-    private void validAuction(Auction auction) {
+    private void valideAuction(Auction auction) {
         if (shouldThrowExceptions) {
             try {
                 counter++;
-                if (counter % 4 == 0) {
+                if (counter % 100 == 0) {
                     throw new NumberFormatException("ups");
                 }
             } catch (NumberFormatException e) {
-                // do something else
+                // please ignore
             }
         }
     }
-
-    @Override
-    public void placeBidOnProduct(String productUiid, Bid bid) throws ProductNotFoundException, BidTooLowException, InvalidAuctionStateException {
-        Auction auction = retrieveAuction(productUiid);
-        auction.addBid(bid);
-        auctionRepository.save(auction);
-    }
-
-    @Override
-    @Scheduled(fixedRate = 10_000)
-    public void handleExpiredAuctions() {
-        activeAuctions.values().removeIf(Auction::isExpired);
-        log.info("Auctions: " + activeAuctionCount());
-    }
-
-    @Override
-    public int activeAuctionCount() {
-        return activeAuctions.size();
-    }
 }
+
