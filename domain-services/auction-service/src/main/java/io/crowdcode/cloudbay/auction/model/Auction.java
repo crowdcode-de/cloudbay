@@ -4,9 +4,13 @@ import io.crowdcode.cloudbay.auction.exceptions.AuctionExpiredException;
 import io.crowdcode.cloudbay.auction.exceptions.AuctionNotStartedException;
 import io.crowdcode.cloudbay.auction.exceptions.BidTooLowException;
 import io.crowdcode.cloudbay.auction.exceptions.InvalidAuctionStateException;
-import lombok.Data;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.Hibernate;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -19,7 +23,10 @@ import java.util.List;
 import java.util.Objects;
 
 @Slf4j
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @Entity
 @Accessors(chain = true)
 public class Auction extends AbstractEntity<Long> {
@@ -32,6 +39,7 @@ public class Auction extends AbstractEntity<Long> {
     private LocalDateTime expireDateTime;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
     private List<Bid> bids = new ArrayList<>();
 
     public Auction addBid(Bid bid) throws InvalidAuctionStateException, BidTooLowException {
@@ -71,10 +79,22 @@ public class Auction extends AbstractEntity<Long> {
 
     public boolean isRunning() {
         return (beginDateTime.isBefore(LocalDateTime.now())
-                || beginDateTime.isEqual(LocalDateTime.now())
-                && expireDateTime.isAfter(LocalDateTime.now()));
+                || beginDateTime.isEqual(LocalDateTime.now()))
+                && expireDateTime.isAfter(LocalDateTime.now());
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Auction auction = (Auction) o;
+        return getId() != null && Objects.equals(getId(), auction.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }
 
 
