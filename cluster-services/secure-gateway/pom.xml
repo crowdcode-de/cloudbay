@@ -18,7 +18,7 @@
     <description>secure-gateway</description>
 
     <properties>
-        <spring-cloud.version>2020.0.2</spring-cloud.version>
+        <spring-cloud.version>2021.0.4</spring-cloud.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>11</java.version>
         <outputFolder>${project.build.directory}/${project.artifactId}</outputFolder>
@@ -66,6 +66,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
         </dependency>
 
     </dependencies>
