@@ -3,9 +3,7 @@
 
 ## General Setup
 
-Using Spring Boot 2.3.4.RELEASE on Java Language Level 11.
-
-![deployment diagram](documents/images/cloudbay_services.png)
+Using Spring Boot 3.0 on Java Language Level 17.
 
 ## Cloud Infrastructure Services
 
