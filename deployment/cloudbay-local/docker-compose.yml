@@ -1,59 +1,109 @@
 version: "3"
 services:
+
+  # Cloud Services
+
   mailtrap:
-    image: dbck/mailtrap:1.0.0
+    image: dbck/mailtrap:1.2.0
     ports:
-      - 80:80
-      - 25:25
-      - 110:110
+      - "80:80"
+      - "25:25"
+      - "110:110"
+
   postgres:
-    image: postgres
+    image: postgres:14
     environment:
       POSTGRES_PASSWORD: masterkey
     stdin_open: true
     tty: true
     ports:
-      - 5432:5432
+      - "5432:5432"
+
   keycloak:
-    image: jboss/keycloak
+    image: quay.io/keycloak/keycloak:20.0.1
     environment:
-      KEYCLOAK_USER: admin
-      KEYCLOAK_PASSWORD: 4dm1n!
-      KEYCLOAK_IMPORT: /tmp/realm-cloudbay.json
-      DB_VENDOR: postgres
-      DB_ADDR: postgres
-      DB_DATABASE: postgres
-      DB_USER: postgres
-      DB_PASSWORD: masterkey
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: 4dm1n!
+      KEYCLOAK_IMPORT: /data/realm-cloudbay.json
+      KC_DB: postgres
+      KC_DB_URL: "jdbc:postgresql://postgres/postgres"
+      KC_DB_USERNAME: postgres
+      KC_DB_PASSWORD: masterkey
     volumes:
-      - ../keycloak/realm-cloudbay.json:/tmp/realm-cloudbay.json
+      - ../keycloak/realm-cloudbay.json:/opt/keycloak/data/import/realm-cloudbay.json
     stdin_open: true
     tty: true
     ports:
-      - 8200:8080
-      - 9090:9090
+      - "8200:8080"
+      - "9080:9090"
     links:
       - postgres:postgres
-  jaeger:
-    image: jaegertracing/all-in-one
+      - mailtrap:mailtrap
+    entrypoint: "/opt/keycloak/bin/kc.sh start-dev --import-realm"
+
+  # Observability
+
+  #  jaeger:
+  #    image: jaegertracing/all-in-one
+  #    ports:
+  #      - "5775:5775"
+  #      - "6831:6831/udp"
+  #      - "6832:6832/udp"
+  #      - "5778:5778"
+  #      - "16686:16686"
+  #      - "14268:14268"
+  #      - "14250:14250"
+  #      - "9411:9411"#
+
+  grafana:
+    image: grafana/grafana:9.3.2
+    depends_on:
+      - prometheus
+      - tempo
+      - loki
     ports:
-      - "5775:5775"
-      - "6831:6831/udp"
-      - "6832:6832/udp"
-      - "5778:5778"
-      - "16686:16686"
-      - "14268:14268"
-      - "14250:14250"
-      - "9411:9411"
+      - "3000:3000"
+    environment:
+      # Define Admin user
+      #      - GF_SECURITY_ADMIN_USER=admin
+      #      - GF_SECURITY_ADMIN_PASSWORD=admin
+      # Disable Login
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+      - GF_AUTH_DISABLE_LOGIN_FORM=true
+    volumes:
+      - "../grafana/datasources:/etc/grafana/provisioning/datasources:ro"
+      - "../grafana/dashboards:/etc/grafana/provisioning/dashboards:ro"
+      - "../grafana/grafana.ini:/etc/grafana/grafana.ini"
+
+  loki:
+    image: grafana/loki:2.7.1
+    extra_hosts: ['host.docker.internal:host-gateway']
+    command: [ "-config.file=/etc/loki/local-config.yaml" ]
+    ports:
+      - "3100:3100"
+    environment:
+      - JAEGER_AGENT_HOST=tempo
+      - JAEGER_ENDPOINT=http://tempo:14268/api/traces # send traces to Tempo
+      - JAEGER_SAMPLER_TYPE=const
+      - JAEGER_SAMPLER_PARAM=1
+
   prometheus:
-    image: prom/prometheus
+    image: prom/prometheus:v2.40.6
     ports:
       - "9099:9090"
     volumes:
-      - ../prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - "../prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro"
     stdin_open: true
     tty: true
-  grafana:
-    image: grafana/grafana
+
+  tempo:
+    image: grafana/tempo:1.5.0
+    command: -config.file /etc/tempo-config.yml
     ports:
-      - 3000:3000
+      - "3200:3200"
+      - "4317:4317"
+      - "14268:14268" # jaeger
+      - "9411:9411"
+    volumes:
+      - "../tempo/tempo.yml:/etc/tempo-config.yml:ro"

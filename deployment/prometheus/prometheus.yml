@@ -1,15 +1,60 @@
 global:
-  scrape_interval: 5s
-  evaluation_interval: 10s
+  scrape_interval: 2s
+  evaluation_interval: 5s
 scrape_configs:
-  - job_name: 'auction-service'
+  - job_name: 'gateway_service'
+    scrape_interval: 2s
     metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['host.docker.internal:9000']
+        labels:
+          application: 'gateway-service'
+  - job_name: 'config-server'
+    scrape_interval: 2s
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['host.docker.internal:8888']
+        labels:
+          application: 'config-server'
+  - job_name: 'cli-client'
+    scrape_interval: 2s
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['host.docker.internal:7400']
+        labels:
+          application: 'cli-client'
+  - job_name: 'greeting-service'
+    metrics_path: '/greeting-service/actuator/prometheus'
+    scheme: 'http'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['host.docker.internal:8300']
+        labels:
+          application: 'greeting-service'
+  - job_name: 'time-service'
+    metrics_path: '/time-service/actuator/prometheus'
+    scheme: 'http'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['host.docker.internal:8400']
+        labels:
+          application: 'time-service'
+  - job_name: 'catalog-service'
+    metrics_path: '/catalog-service/actuator/prometheus'
+    scheme: 'http'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['host.docker.internal:8500']
+        labels:
+          application: 'catalog-service'
+  - job_name: 'auction-service'
+    metrics_path: '/auction-service/actuator/prometheus'
     scheme: 'http'
 #    basic_auth:
 #      username: 'metrics'
 #      password: 'secretkey'
     scrape_interval: 5s
     static_configs:
-      - targets: ['host.docker.internal:8090']
+      - targets: ['host.docker.internal:8600']
         labels:
-          service: auction-service
+          application: 'auction-service'
