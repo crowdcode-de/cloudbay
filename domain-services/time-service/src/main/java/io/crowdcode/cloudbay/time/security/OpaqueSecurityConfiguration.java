@@ -1,12 +1,14 @@
 package io.crowdcode.cloudbay.time.security;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.SecurityFilterChain;
 
 import static io.crowdcode.cloudbay.common.AnsiColor.purple;
+
 
 /**
  * @author Ingo Düppe (CROWDCODE)
@@ -14,17 +16,16 @@ import static io.crowdcode.cloudbay.common.AnsiColor.purple;
 @Slf4j
 @Profile("opaque && !introspection")
 @Configuration
-public class OpaqueSecurityConfiguration extends WebSecurityConfigurerAdapter {
+public class OpaqueSecurityConfiguration {
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    @Bean
+    protected SecurityFilterChain configure(HttpSecurity http) throws Exception {
         log.info(purple("Working with opaque token"));
-        http
+        return http
                 .authorizeRequests()
                 .anyRequest().authenticated()
                 .and()
-                .oauth2ResourceServer()
-                .opaqueToken()
-        ;
+                .oauth2ResourceServer((configure) -> configure.opaqueToken())
+                .build();
     }
 }
