@@ -1,0 +1,2 @@
+### Simulate memory usage
+PUT http://localhost:8080/allocate/mem/1024/20

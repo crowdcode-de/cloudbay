@@ -32,7 +32,7 @@ public class SimulateIssueController {
     @PutMapping("/allocate/mem/{size}/{seconds}")
     public ResponseEntity<String> allocateMemory(@PathVariable int size, @PathVariable int seconds) {
         allocateMemoryForSeconds.allocate(size, seconds);
-        return ResponseEntity.ok("{\"message\":\"Alloced the memory for some seconds\"}");
+        return ResponseEntity.ok("{\"message\":\"Allocated the memory for some seconds\"}");
     }
 
 

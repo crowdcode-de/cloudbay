@@ -1,6 +1,6 @@
 package io.crowdcode.cloudbay.auction.model;
 
-import javax.persistence.Embeddable;
+import jakarta.persistence.Embeddable;
 import java.io.Serializable;
 
 /**
