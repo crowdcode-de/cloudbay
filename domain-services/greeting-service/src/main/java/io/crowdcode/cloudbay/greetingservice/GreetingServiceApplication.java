@@ -15,8 +15,8 @@ public class GreetingServiceApplication {
 	@Bean
 	public ApplicationRunner shutdownAfterStart() {
 		return (args) -> {
-			if (args.containsOption("quite")) {
-				System.out.println("Quite System After Startup!");
+			if (args.containsOption("quit")) {
+				System.out.println("Quit System After Startup!");
 				System.exit(0);
 			}
 		};
