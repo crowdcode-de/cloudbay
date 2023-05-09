@@ -8,3 +8,7 @@ target
 logs/
 cloudbay-h2-db.mv.db
 cloudbay-h2-db.trace.db
+/distributed/greeting-service.jsa
+/distributed/greeting-service.lst
+/distributed/guzzler.csv
+/distributed/memory-guzzler.csv
